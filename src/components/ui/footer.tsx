@@ -6,15 +6,43 @@ const Footer = () => {
       {/* Спонсоры */}
       <div className="flex flex-col justify-center items-center flex-wrap gap-8 py-8">
         <div className="flex flex-row flex-wrap gap-8 justify-start sm:justify-center items-center">
-          <img src="/sponsors/sport_min.svg" alt="Министерство спорта РФ" />
-          <img src="/sponsors/fumo_high.svg" alt="ФУМО ВО по ИБ" />
-          <img src="/sponsors/fumo_prof.svg" alt="ФУМО СПО по ИБ" />
-          <img src="/sponsors/reserv.svg" alt="ФУМО СПО по ИБ" />
+          <img
+            className="max-w-[40%] sm:w-auto md:max-w-[60%]"
+            src="/sponsors/sport_min.svg"
+            alt="Министерство спорта РФ"
+          />
+          <img
+            className="max-w-[40%] sm:w-auto md:max-w-[60%]"
+            src="/sponsors/fumo_high.svg"
+            alt="ФУМО ВО по ИБ"
+          />
+          <img
+            className="max-w-[40%] sm:w-auto md:max-w-[60%]"
+            src="/sponsors/fumo_prof.svg"
+            alt="ФУМО СПО по ИБ"
+          />
+          <img
+            className="max-w-[40%] sm:w-auto md:max-w-[60%]"
+            src="/sponsors/reserv.svg"
+            alt="ФУМО СПО по ИБ"
+          />
         </div>
-        <div className="flex flex-row flex-wrap gap-8 justify-start sm:justify-center items-center">
-          <img src="/sponsors/stoloto.svg" alt="СТОЛОТО" />
-          <img src="/sponsors/uralhim.svg" alt="Урал Хим" />
-          <img src="/sponsors/mws.svg" alt="MWS" />
+        <div className="flex flex-row sm:flex-row flex-wrap gap-8 justify-start sm:justify-center items-center">
+          <img
+            className="max-w-[40%] sm:w-auto md:max-w-[60%]"
+            src="/sponsors/stoloto.svg"
+            alt="СТОЛОТО"
+          />
+          <img
+            className="max-w-[40%] sm:w-auto md:max-w-[60%]"
+            src="/sponsors/uralhim.svg"
+            alt="Урал Хим"
+          />
+          <img
+            className="max-w-[40%] sm:w-auto md:max-w-[60%]"
+            src="/sponsors/mws.svg"
+            alt="MWS"
+          />
         </div>
       </div>
 
@@ -22,7 +50,11 @@ const Footer = () => {
       <div className="w-full flex flex-col sm:flex-row sm:justify-between sm:items-center">
         {/* Логотип и адрес */}
         <div className="flex flex-col gap-6">
-          <img className="max-w-[50%]" src="/logo2.svg" alt="Второй логотип" />
+          <img
+            className="max-w-[150px] sm:max-w-[50%]"
+            src="/logo2.svg"
+            alt="Второй логотип"
+          />
 
           <div className="font-semibold text-blacktext">
             125047, г. Москва,
