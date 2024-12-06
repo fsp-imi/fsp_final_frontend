@@ -20,6 +20,7 @@ import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./sheet"
 
 const Header = () => {
   const logout = useUserStore((state) => state.logout)
+
   return (
     <div className="w-full h-16 px-8 py-3 border-b-[1px] border-gray rounded-b-3xl flex flex-row justify-between items-center bg-white">
       {/* Логотип */}
@@ -106,11 +107,9 @@ const Header = () => {
                 Профиль
               </DropdownMenuItem>
             </Link>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => logout()}>
               <LogOut />
-              <div onClick={() => logout()} className="">
-                Выйти
-              </div>
+              Выйти
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

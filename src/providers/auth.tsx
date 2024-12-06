@@ -1,4 +1,4 @@
-import Loader from "@/components/ui/loader"
+import LoaderScreen from "@/components/ui/loader-screen"
 
 import { ReactNode, useEffect } from "react"
 import { useUserStore } from "../store/user"
@@ -8,7 +8,7 @@ import { getToken } from "../services/auth/auth.helper"
 const authRoutes = ["/login", "/registration"]
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { check, isAuth, isLoading } = useUserStore()
+  const { check, isAuth, isLoading, clearError } = useUserStore()
 
   const { pathname } = useLocation()
 
@@ -46,9 +46,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       }
     }
+
+    clearError()
   }, [isAuth, isLoading, pathname])
 
-  if (isLoading) return <Loader />
+  if (isLoading) return <LoaderScreen />
 
   return <>{children}</>
 }

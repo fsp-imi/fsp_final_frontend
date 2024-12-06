@@ -20,6 +20,7 @@ interface IUserStore {
   login: (data: ILoginPassword) => void
   register: (data: IRegistrationData) => void
   logout: () => void
+  clearError: () => {}
 }
 
 export const useUserStore = create<IUserStore>((set) => ({
@@ -38,6 +39,7 @@ export const useUserStore = create<IUserStore>((set) => ({
       isLoading: true,
       isAuth: false,
       isError: false,
+      user: null,
       error: null,
     })
 
@@ -46,7 +48,11 @@ export const useUserStore = create<IUserStore>((set) => ({
     let isLogged = false
 
     if (token) {
-      isLogged = await AuthService.check()
+      try {
+        isLogged = await AuthService.check()
+      } catch (error) {
+        isLogged = false
+      }
     }
 
     if (!isLogged) {
@@ -63,11 +69,11 @@ export const useUserStore = create<IUserStore>((set) => ({
       const user = await UserService.getProfile()
 
       set({
-        isLoading: false,
         isAuth: true,
         isError: false,
         error: null,
         user,
+        isLoading: false,
       })
     }
   },
@@ -136,6 +142,13 @@ export const useUserStore = create<IUserStore>((set) => ({
     set({
       isLoading: false,
       isAuth: false,
+      isError: false,
+      error: null,
+    })
+  },
+  clearError: async () => {
+    set({
+      isLoading: false,
       isError: false,
       error: null,
     })

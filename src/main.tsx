@@ -1,4 +1,5 @@
 import Router from "@/router/router.tsx"
+import AuthProvider from "./providers/auth"
 
 import "./index.css"
 
@@ -11,7 +12,9 @@ const queryClient = new QueryClient()
 createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <Router />
+      <AuthProvider>
+        <Router />
+      </AuthProvider>
     </BrowserRouter>
   </QueryClientProvider>
 )

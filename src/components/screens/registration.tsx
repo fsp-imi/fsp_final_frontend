@@ -42,13 +42,13 @@ const RegistrationScreen = () => {
           className="w-auto h-auto flex flex-col gap-6 rounded-md bg-white shadow-md p-6"
         >
           <div className="text-2xl font-medium text-center">Регистрация</div>
-          <div className="w-full flex flex-row flex-wrap gap-2">
+          <div className="w-full flex flex-row flex-wrap gap-2 relative">
             {/* Имя */}
             <FormField
               control={form.control}
               name="first_name"
               render={({ field }) => (
-                <FormItem className="w-full sm:w-auto">
+                <FormItem className="w-full sm:max-w-[48%]">
                   <FormLabel>Имя</FormLabel>
                   <FormControl>
                     <Input className="w-full" placeholder="Иван" {...field} />
@@ -63,7 +63,7 @@ const RegistrationScreen = () => {
               control={form.control}
               name="last_name"
               render={({ field }) => (
-                <FormItem className="w-full sm:w-auto">
+                <FormItem className="w-full sm:max-w-[48%]">
                   <FormLabel>Фамилия</FormLabel>
                   <FormControl>
                     <Input placeholder="Иванов" {...field} />
@@ -130,7 +130,7 @@ const RegistrationScreen = () => {
                   <Input type="password" placeholder="********" {...field} />
                 </FormControl>
                 <FormMessage />
-                {isError && <div className="text-red-500">{error}</div>}
+                {isError && <div className="text-red-500 text-sm">{error}</div>}
               </FormItem>
             )}
           />

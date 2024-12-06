@@ -65,7 +65,7 @@ const LoginScreen = () => {
                   <Input type="password" placeholder="********" {...field} />
                 </FormControl>
                 <FormMessage />
-                {isError && <div className="text-red-500">{error}</div>}
+                {isError && <div className="text-red-500 text-sm">{error}</div>}
               </FormItem>
             )}
           />

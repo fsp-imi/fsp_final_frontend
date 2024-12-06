@@ -4,7 +4,7 @@ import { IUser } from "@/interfaces/user"
 export const UserService = {
   async getProfile(): Promise<IUser> {
     const response = await instance({
-      url: `/userapi/profile`,
+      url: `/users/profile`,
       method: "GET",
     })
 
@@ -13,7 +13,7 @@ export const UserService = {
 
   async changeProfile(data: Partial<IUser>): Promise<IUser> {
     const response = await instance({
-      url: `/userapi/profile/`,
+      url: `/users/profile/`,
       method: "POST",
       data,
     })

@@ -1,3 +1,5 @@
+import Loader from "../loader"
+
 import { profileSchema } from "@/schemes/profile"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -13,25 +15,37 @@ import {
 import { Input } from "../input"
 import { Button } from "../button"
 import { useUserStore } from "@/store/user"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { UserService } from "@/services/user/user"
+import { useEffect } from "react"
 
 const ProfileForm = () => {
-  const { user } = useUserStore()
+  const { data: user, isLoading } = useQuery({
+    queryKey: ["get profile"],
+    queryFn: UserService.getProfile,
+  })
 
-  console.log(user)
+  const { setUser, isLoading: isAuthLoading } = useUserStore()
 
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
-    defaultValues: {
-      first_name: "",
-      last_name: "",
-      username: "",
-      email: "",
-    },
+  })
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["change user"],
+    mutationFn: UserService.changeProfile,
+    onSuccess: (res) => setUser(res),
   })
 
   const onSubmit = (values: z.infer<typeof profileSchema>) => {
-    console.log(values)
+    mutate(values)
   }
+
+  useEffect(() => {
+    if (user) form.reset(user)
+  }, [user])
+
+  if (isPending || isLoading || isAuthLoading) return <Loader />
 
   return (
     <Form {...form}>
@@ -40,21 +54,6 @@ const ProfileForm = () => {
         className="w-auto h-auto flex flex-col gap-6"
       >
         <div className="text-2xl font-medium">Данные профиля</div>
-
-        {/* Логин */}
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Логин</FormLabel>
-              <FormControl>
-                <Input placeholder="ivan1" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <div className="w-full flex flex-row flex-wrap gap-2">
           {/* Имя */}
@@ -111,7 +110,7 @@ const ProfileForm = () => {
             <FormItem>
               <FormLabel>Логин</FormLabel>
               <FormControl>
-                <Input placeholder="ivan1" {...field} />
+                <Input disabled placeholder="ivan1" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
