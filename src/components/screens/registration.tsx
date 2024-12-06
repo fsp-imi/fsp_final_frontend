@@ -1,5 +1,3 @@
-import Loader from "@/components/ui/loader"
-
 import { registrationSchema } from "@/schemes/registration"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -19,7 +17,7 @@ import { useUserStore } from "@/store/user"
 
 const RegistrationScreen = () => {
   const { register, error, isError } = useUserStore()
-  
+
   const form = useForm<z.infer<typeof registrationSchema>>({
     resolver: zodResolver(registrationSchema),
     defaultValues: {

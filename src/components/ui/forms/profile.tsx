@@ -15,7 +15,7 @@ import { Button } from "../button"
 import { useUserStore } from "@/store/user"
 
 const ProfileForm = () => {
-  const { user, setUser } = useUserStore()
+  const { user } = useUserStore()
 
   console.log(user)
 

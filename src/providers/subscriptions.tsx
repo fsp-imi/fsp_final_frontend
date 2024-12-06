@@ -1,9 +1,9 @@
+import Loader from "@/components/ui/loader"
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { createContext, ReactNode } from "react"
 import { SubscriptionService } from "../services/subscription/subscription.service"
 import { ISubsciption } from "../interfaces/subscription"
-import LoaderScreen from "@/components/ui/loader-screen"
-import Loader from "@/components/ui/loader"
 
 interface ISubscriptionContext {
   subscriptions: ISubsciption[]

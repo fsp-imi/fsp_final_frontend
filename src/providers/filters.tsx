@@ -1,3 +1,5 @@
+import Loader from "@/components/ui/loader"
+
 import { ICity } from "@/interfaces/city"
 import { IContestType } from "@/interfaces/contest-type"
 import { ICountry } from "@/interfaces/country"
@@ -17,8 +19,6 @@ import { createContext, ReactNode, useCallback } from "react"
 import { useLocation, useSearchParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import { formatDate } from "@/utils/format-date"
-import LoaderScreen from "@/components/ui/loader-screen"
-import Loader from "@/components/ui/loader"
 
 interface IFiltersContext {
   sporttypes: ISportType[]
