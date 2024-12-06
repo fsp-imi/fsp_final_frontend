@@ -1,5 +1,3 @@
-import AboutUsScreen from "@/components/screens/about-us"
-import ContactsScreen from "@/components/screens/contacts"
 import ContestSearch from "@/components/screens/contest-search"
 import LoginScreen from "@/components/screens/login"
 import MainScreen from "@/components/screens/main"
@@ -20,8 +18,6 @@ const Router = () => {
       </Route>
       <Route path="/" element={<MainLayout />}>
         <Route path="/" index element={<MainScreen />} />
-        <Route path="/contacts" index element={<ContactsScreen />} />
-        <Route path="/about-us" index element={<AboutUsScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
         <Route
           path="/contest-search"
