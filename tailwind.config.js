@@ -53,6 +53,8 @@ export default {
         gray: "#D9D9D9",
         lightgray: "#F5F5F5",
         darkgray: "#2C2C2C",
+        darktext: "#757575",
+        blacktext: "#1E1E1E"
       },
     },
   },

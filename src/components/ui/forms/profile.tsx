@@ -48,78 +48,80 @@ const ProfileForm = () => {
   if (isPending || isLoading || isAuthLoading) return <Loader />
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="w-auto h-auto flex flex-col gap-6"
-      >
-        <div className="text-2xl font-medium">Данные профиля</div>
+    <div className="py-8 px-10 rounded-3xl flex flex-col w-auto bg-white gap-8">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-auto h-auto flex flex-col gap-6"
+        >
+          <div className="text-2xl font-medium">Данные профиля</div>
 
-        <div className="w-full flex flex-row flex-wrap gap-2">
-          {/* Имя */}
+          <div className="w-full flex flex-row flex-wrap gap-2">
+            {/* Имя */}
+            <FormField
+              control={form.control}
+              name="first_name"
+              render={({ field }) => (
+                <FormItem className="w-full sm:w-auto">
+                  <FormLabel>Имя</FormLabel>
+                  <FormControl>
+                    <Input className="w-full" placeholder="Иван" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Фамилия */}
+            <FormField
+              control={form.control}
+              name="last_name"
+              render={({ field }) => (
+                <FormItem className="w-full sm:w-auto">
+                  <FormLabel>Фамилия</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Иванов" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {/* Логин */}
           <FormField
             control={form.control}
-            name="first_name"
+            name="email"
             render={({ field }) => (
-              <FormItem className="w-full sm:w-auto">
-                <FormLabel>Имя</FormLabel>
+              <FormItem>
+                <FormLabel>Электронная почта</FormLabel>
                 <FormControl>
-                  <Input className="w-full" placeholder="Иван" {...field} />
+                  <Input placeholder="ivan1" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          {/* Фамилия */}
+          {/* Логин */}
           <FormField
             control={form.control}
-            name="last_name"
+            name="username"
             render={({ field }) => (
-              <FormItem className="w-full sm:w-auto">
-                <FormLabel>Фамилия</FormLabel>
+              <FormItem>
+                <FormLabel>Логин</FormLabel>
                 <FormControl>
-                  <Input placeholder="Иванов" {...field} />
+                  <Input disabled placeholder="ivan1" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-        </div>
 
-        {/* Логин */}
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Электронная почта</FormLabel>
-              <FormControl>
-                <Input placeholder="ivan1" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Логин */}
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Логин</FormLabel>
-              <FormControl>
-                <Input disabled placeholder="ivan1" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button type="submit">Сохранить</Button>
-      </form>
-    </Form>
+          <Button type="submit">Сохранить</Button>
+        </form>
+      </Form>
+    </div>
   )
 }
 

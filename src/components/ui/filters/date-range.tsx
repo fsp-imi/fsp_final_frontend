@@ -1,44 +1,28 @@
-import { useState } from "react"
-import { Calendar } from "../ui/calendar"
-import { Popover, PopoverTrigger } from "../ui/popover"
-import { Button } from "../ui/button"
+import { useContext, useState } from "react"
+import { Popover, PopoverTrigger } from "../popover"
+import { Button } from "../button"
 import { cn } from "@/lib/utils"
 import { CalendarIcon } from "lucide-react"
-import { PopoverContent } from "@radix-ui/react-popover"
-import { ru } from "date-fns/locale"
 import { format } from "date-fns"
-import { useToast } from "@/hooks/use-toast"
+import { PopoverContent } from "@radix-ui/react-popover"
+import { Calendar } from "../calendar"
+import { ru } from "date-fns/locale"
+import { FiltersContext } from "@/providers/filters"
 
-const MainScreen = () => {
+const DateRangeFilter = () => {
+  const { handleDateRangeFilters, datestart, dateend } =
+    useContext(FiltersContext)
+
   const [date, setDate] = useState<{
     from: Date | undefined
     to: Date | undefined
-  }>()
-
-  const { toast } = useToast()
+  }>({
+    from: new Date(datestart),
+    to: new Date(dateend),
+  })
 
   return (
-    <div className="bg-white">
-      <Button
-        onClick={() => {
-          toast({
-            title: "Scheduled: Catch up",
-            description: "Friday, February 10, 2023 at 5:57 PM",
-          })
-        }}
-      >
-        Show Toast
-      </Button>
-      <Button
-        onClick={() => {
-          toast({
-            title: "Scheduled: Catch up1",
-            description: "Friday, February 10, 2023 at 5:57 PM",
-          })
-        }}
-      >
-        Show Toast
-      </Button>
+    <div className="min-w-[300px]">
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -64,6 +48,7 @@ const MainScreen = () => {
                 from: e?.from || undefined,
                 to: e?.to || undefined,
               }
+              handleDateRangeFilters(newDate)
               setDate(newDate)
             }}
           />
@@ -73,4 +58,4 @@ const MainScreen = () => {
   )
 }
 
-export default MainScreen
+export default DateRangeFilter

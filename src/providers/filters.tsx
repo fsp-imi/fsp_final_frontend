@@ -208,9 +208,9 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
   const handleDateRangeFilters = (date: IDatePicker) => {
     const params = new URLSearchParams(searchParams.toString())
 
-    if (date.startDate && date.endDate) {
-      params.set("datestart", formatDate(date.startDate))
-      params.set("dateend", formatDate(date.endDate))
+    if (date.from && date.to) {
+      params.set("datestart", formatDate(date.from))
+      params.set("dateend", formatDate(date.to))
     } else {
       params.delete("datestart")
       params.delete("dateend")

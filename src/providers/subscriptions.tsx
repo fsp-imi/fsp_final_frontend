@@ -1,9 +1,12 @@
 import Loader from "@/components/ui/loader"
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { createContext, ReactNode } from "react"
+import { createContext, ReactNode, useEffect } from "react"
 import { SubscriptionService } from "../services/subscription/subscription.service"
 import { ISubsciption } from "../interfaces/subscription"
+import { useToast } from "@/hooks/use-toast"
+import { useUserStore } from "@/store/user"
+import { NotificationService } from "@/services/notification/notification.service"
 
 interface ISubscriptionContext {
   subscriptions: ISubsciption[]
@@ -19,6 +22,9 @@ export const SubscriptionContext = createContext<ISubscriptionContext>({
 
 const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient()
+
+  const { toast } = useToast()
+  const { isAuth } = useUserStore()
 
   const { data: subscriptions, isLoading: isSubscriptionsLoading } = useQuery({
     queryKey: ["subscriptions"],
@@ -41,7 +47,30 @@ const SubscriptionProvider = ({ children }: { children: ReactNode }) => {
     },
   })
 
-  if (isSubscriptionsLoading || isSubscribeLoading || isUnSubscribeLoading)
+  const {
+    data: notifications,
+    isLoading: isNotificationsLoading,
+    isSuccess: isNotificationsSuccess,
+  } = useQuery({
+    queryKey: ["notifications"],
+    queryFn: () => (isAuth ? NotificationService.getAll() : null),
+  })
+
+  useEffect(() => {
+    if (notifications)
+      notifications.map((notification) => {
+        toast({
+          description: notification.text,
+        })
+      })
+  }, [isNotificationsSuccess])
+
+  if (
+    isSubscriptionsLoading ||
+    isSubscribeLoading ||
+    isUnSubscribeLoading ||
+    isNotificationsLoading
+  )
     return <Loader />
 
   return (

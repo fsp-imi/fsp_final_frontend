@@ -10,9 +10,7 @@ const ProfileScreen = () => {
 
   return (
     <div className="h-full flex flex-col justify-center items-center">
-      <div className="py-8 px-10 rounded-3xl flex flex-col w-auto bg-white gap-8">
-        <ProfileForm />
-      </div>
+      <ProfileForm />
     </div>
   )
 }

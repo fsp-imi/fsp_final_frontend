@@ -1,4 +1,4 @@
 export interface IDatePicker {
-  startDate: Date | null
-  endDate: Date | null
+  from: Date | undefined
+  to: Date | undefined
 }

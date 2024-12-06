@@ -99,7 +99,7 @@ export const useUserStore = create<IUserStore>((set) => ({
         isLoading: false,
         isAuth: false,
         isError: true,
-        error: error.response.data.errors[0],
+        error: error.response.data.details[0],
       })
     }
   },
@@ -125,7 +125,7 @@ export const useUserStore = create<IUserStore>((set) => ({
         isLoading: false,
         isAuth: false,
         isError: true,
-        error: error.response.data.errors[0],
+        error: error.response.data.details[0],
       })
     }
   },
