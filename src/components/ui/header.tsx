@@ -38,16 +38,6 @@ const Header = () => {
               <Link to="/">Главная</Link>
             </SheetClose>
             <SheetClose asChild>
-              <Link to="/contacts" className="">
-                Контакты
-              </Link>
-            </SheetClose>
-            <SheetClose asChild>
-              <Link to="/about-us" className="">
-                О нас
-              </Link>
-            </SheetClose>
-            <SheetClose asChild>
               <Link to="/profile" className="">
                 Профиль
               </Link>
@@ -69,16 +59,6 @@ const Header = () => {
             <NavigationMenuItem>
               <Link to="/" className={navigationMenuTriggerStyle()}>
                 Главная
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link to="/contacts" className={navigationMenuTriggerStyle()}>
-                Контакты
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link to="/about-us" className={navigationMenuTriggerStyle()}>
-                О нас
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
