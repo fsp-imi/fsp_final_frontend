@@ -35,7 +35,7 @@ export const useUserStore = create<IUserStore>((set) => ({
   },
   check: async () => {
     set({
-      isLoading: false,
+      isLoading: true,
       isAuth: false,
       isError: false,
       error: null,

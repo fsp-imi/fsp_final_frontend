@@ -1,13 +1,9 @@
-import LoaderScreen from "@/components/ui/loader-screen"
+import Loader from "@/components/ui/loader"
 
-import { createContext, ReactNode, useEffect } from "react"
-import { useUserStore } from "../store/user.store"
+import { ReactNode, useEffect } from "react"
+import { useUserStore } from "../store/user"
 import { useLocation, useNavigate, useSearchParams } from "react-router"
 import { getToken } from "../services/auth/auth.helper"
-
-interface IAuthContext {}
-
-export const AuthContext = createContext<IAuthContext>({})
 
 const authRoutes = ["/login", "/registration"]
 
@@ -46,15 +42,15 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       } else {
         if (!authRoutes.includes(pathname)) {
-          // navigateWithoutLosingSearchParams("/login")
+          navigateWithoutLosingSearchParams("/login")
         }
       }
     }
   }, [isAuth, isLoading, pathname])
 
-  if (isLoading) return <LoaderScreen />
+  if (isLoading) return <Loader />
 
-  return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>
+  return <>{children}</>
 }
 
 export default AuthProvider

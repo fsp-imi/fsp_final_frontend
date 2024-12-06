@@ -28,14 +28,9 @@ export const AuthService = {
 
   async register(data: IRegistrationData): Promise<IAuthResponse> {
     const response = await instance({
-      url: "/users/users/create/",
+      url: "/users/create/",
       method: "POST",
-      data: {
-        login: data.login,
-        password: data.password,
-        email: data.email,
-        fio: data.fio,
-      },
+      data,
     })
 
     return response.data

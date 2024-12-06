@@ -7,12 +7,13 @@ export interface IAuthCheckResponse {
 }
 
 export interface ILoginPassword {
-  login: string
+  username: string
   password: string
 }
 
 export interface IRegistrationData extends ILoginPassword {
-  fio: string
+  first_name: string
+  last_name: string
   email: string
   confirm_password: string
 }

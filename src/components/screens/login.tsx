@@ -1,5 +1,3 @@
-import LoaderScreen from "../ui/loader-screen"
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -15,15 +13,15 @@ import { Input } from "@/components/ui/input"
 import { Button } from "../ui/button"
 import { loginSchema } from "@/schemes/login"
 import { Link } from "react-router-dom"
-import { useUserStore } from "@/store/user.store"
+import { useUserStore } from "@/store/user"
 
 const LoginScreen = () => {
-  const { isLoading, login, error } = useUserStore()
+  const { isError, login, error } = useUserStore()
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      login: "",
+      username: "",
       password: "",
     },
   })
@@ -32,8 +30,6 @@ const LoginScreen = () => {
     login(values)
   }
 
-  if (isLoading) return <LoaderScreen />
-
   return (
     <div className="w-screen min-h-screen flex justify-center items-center bg-[url('/registration.jpg')] bg-cover px-4">
       <Form {...form}>
@@ -41,15 +37,17 @@ const LoginScreen = () => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full sm:max-w-[334px] h-auto flex flex-col gap-6 rounded-md bg-white shadow-md p-6"
         >
+          <div className="text-2xl font-medium">Авторизация</div>
+
           {/* Логин */}
           <FormField
             control={form.control}
-            name="login"
+            name="username"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Логин</FormLabel>
                 <FormControl>
-                  <Input placeholder="bochka41" {...field} />
+                  <Input placeholder="ivan1" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -67,7 +65,7 @@ const LoginScreen = () => {
                   <Input type="password" placeholder="********" {...field} />
                 </FormControl>
                 <FormMessage />
-                {error}
+                {isError && <div className="text-red-500">{error}</div>}
               </FormItem>
             )}
           />

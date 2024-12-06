@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 export const loginSchema = z.object({
-  login: z
+  username: z
     .string()
     .min(1, { message: "Введите логин" })
     .max(100, { message: "Слишком длинный логин" }),

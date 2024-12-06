@@ -1,3 +1,5 @@
+import Loader from "@/components/ui/loader"
+
 import { registrationSchema } from "@/schemes/registration"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -13,13 +15,17 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "../ui/button"
 import { Link } from "react-router-dom"
+import { useUserStore } from "@/store/user"
 
 const RegistrationScreen = () => {
+  const { register, error, isError } = useUserStore()
+  
   const form = useForm<z.infer<typeof registrationSchema>>({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
-      fio: "",
-      login: "",
+      first_name: "",
+      last_name: "",
+      username: "",
       email: "",
       password: "",
       confirm_password: "",
@@ -27,7 +33,7 @@ const RegistrationScreen = () => {
   })
 
   const onSubmit = (values: z.infer<typeof registrationSchema>) => {
-    console.log(values)
+    register(values)
   }
 
   return (
@@ -35,32 +41,50 @@ const RegistrationScreen = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full sm:max-w-[334px] h-auto flex flex-col gap-6 rounded-md bg-white shadow-md p-6"
+          className="w-auto h-auto flex flex-col gap-6 rounded-md bg-white shadow-md p-6"
         >
-          {/* ФИО */}
-          <FormField
-            control={form.control}
-            name="fio"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>ФИО</FormLabel>
-                <FormControl>
-                  <Input placeholder="Бочкарев Виктор Гаврильевич" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="text-2xl font-medium text-center">Регистрация</div>
+          <div className="w-full flex flex-row flex-wrap gap-2">
+            {/* Имя */}
+            <FormField
+              control={form.control}
+              name="first_name"
+              render={({ field }) => (
+                <FormItem className="w-full sm:w-auto">
+                  <FormLabel>Имя</FormLabel>
+                  <FormControl>
+                    <Input className="w-full" placeholder="Иван" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Фамилия */}
+            <FormField
+              control={form.control}
+              name="last_name"
+              render={({ field }) => (
+                <FormItem className="w-full sm:w-auto">
+                  <FormLabel>Фамилия</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Иванов" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           {/* Логин */}
           <FormField
             control={form.control}
-            name="login"
+            name="username"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Логин</FormLabel>
                 <FormControl>
-                  <Input placeholder="bochka41" {...field} />
+                  <Input placeholder="ivan1" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -75,7 +99,7 @@ const RegistrationScreen = () => {
               <FormItem>
                 <FormLabel>Почта</FormLabel>
                 <FormControl>
-                  <Input placeholder="viktor@mail.ru" {...field} />
+                  <Input placeholder="ivan@mail.ru" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -108,6 +132,7 @@ const RegistrationScreen = () => {
                   <Input type="password" placeholder="********" {...field} />
                 </FormControl>
                 <FormMessage />
+                {isError && <div className="text-red-500">{error}</div>}
               </FormItem>
             )}
           />
