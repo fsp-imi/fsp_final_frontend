@@ -34,6 +34,7 @@ import { ContestTypeService } from "@/services/contest/contest-type.service"
 import { Checkbox } from "../ui/checkbox"
 import { DisciplineService } from "@/services/contest/discipline.service"
 import { AgeGroupService } from "@/services/contest/age-group.service"
+import { Navigate, useNavigate } from "react-router-dom"
 
 const CreateClaim = () => {
   const form = useForm<z.infer<typeof claimSchema>>({
@@ -50,6 +51,8 @@ const CreateClaim = () => {
       agegroup: [],
     },
   })
+
+  const navigate = useNavigate()
 
   const sporttype = useWatch({ control: form.control, name: "sporttype" })
 
@@ -76,10 +79,17 @@ const CreateClaim = () => {
   const { mutate, isPending } = useMutation({
     mutationKey: ["create claim"],
     mutationFn: ClaimService.create,
+    onSuccess: () => navigate("/lk"),
   })
 
   const onSubmit = (values: z.infer<typeof claimSchema>) => {
-    mutate(values)
+    mutate({
+      sender_federation: 1,
+      contest_type: Number(values.contesttype),
+      contest_discipline: values.discipline,
+      contest_age_group: values.agegroup,
+      ...values,
+    })
   }
 
   return (
@@ -247,7 +257,7 @@ const CreateClaim = () => {
                   <FormControl>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={field.value ? field.value.toString() : ""}
                     >
                       <SelectTrigger className="">
                         <SelectValue placeholder="Выберите уровень соревнования" />
@@ -266,6 +276,32 @@ const CreateClaim = () => {
                             </SelectItem>
                           ))
                         )}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Характер соревнования */}
+            <FormField
+              control={form.control}
+              name="contest_char"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Характер соревнования</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value ? field.value.toString() : ""}
+                    >
+                      <SelectTrigger className="">
+                        <SelectValue placeholder="Выберите характер соревнования" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value={"Личная"}>Личная</SelectItem>
+                        <SelectItem value={"Командная"}>Командная</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>

@@ -13,6 +13,7 @@ export const claimSchema = z.object({
     required_error: "Выберите формат проведения соревнования",
   }),
   contesttype: z.string({ required_error: "Выберите уровень соревнования" }),
+  contest_char: z.string({ required_error: "Выберите характер соревнования" }),
   sporttype: z.array(z.number()).refine((value) => value.some((item) => item), {
     message: "Выберите вид спорта",
   }),
@@ -21,10 +22,7 @@ export const claimSchema = z.object({
     .refine((value) => value.some((item) => item), {
       message: "Выберите дисциплины",
     }),
-    agegroup: z
-    .array(z.number())
-    .refine((value) => value.some((item) => item), {
-      message: "Выберите возрастные группы",
-    }),
-
+  agegroup: z.array(z.number()).refine((value) => value.some((item) => item), {
+    message: "Выберите возрастные группы",
+  }),
 })
