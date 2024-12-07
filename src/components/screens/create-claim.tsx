@@ -34,7 +34,7 @@ import { ContestTypeService } from "@/services/contest/contest-type.service"
 import { Checkbox } from "../ui/checkbox"
 import { DisciplineService } from "@/services/contest/discipline.service"
 import { AgeGroupService } from "@/services/contest/age-group.service"
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const CreateClaim = () => {
   const form = useForm<z.infer<typeof claimSchema>>({
