@@ -21,6 +21,9 @@ import { useEffect } from "react"
 import { Card } from "../card"
 import { federalSchema } from "@/schemes/federal"
 
+import InputMask from "react-input-mask";
+import { Label } from "../label"
+
 const PersonalForm = () => {
   const { data: user, isLoading } = useQuery({
     queryKey: ["get profile"],
@@ -100,7 +103,14 @@ const PersonalForm = () => {
               <FormItem>
                 <FormLabel>Номер телефона</FormLabel>
                 <FormControl>
-                  <Input placeholder="Номер телефона" {...field} />
+                <InputMask
+                  mask="+7 (999) 999-99-99"
+                  placeholder="+7 (999) 999-99-99"
+                  value={field.value}
+                  onChange={field.onChange}
+                >
+                  {(inputProps) => <Input {...inputProps} />}
+                </InputMask>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -125,12 +135,19 @@ const PersonalForm = () => {
           {/* Время работы */}
           <FormField
             control={form.control}
-            name="phone"
+            name="time"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Время работы</FormLabel>
                 <FormControl>
-                  <Input placeholder="Время работы" {...field} />
+                <InputMask
+                  mask="99:99 - 99:99"
+                  placeholder="08:00 - 18:00"
+                  value={field.value}
+                  onChange={field.onChange}
+                >
+                  {(inputProps) => <Input {...inputProps} />}
+                </InputMask>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -157,9 +174,12 @@ const PersonalForm = () => {
       </Form>
 
       <Form {...form2}>
-        <form action="" className="flex flex-col gap-2">
+        <form action="" className="flex flex-col gap-4">
           <div className="text-2xl font-medium">Фото профиля</div>
           <div className="bg-blue-600 rounded-full h-24 w-24"></div>
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Input id="picture" type="file" />
+          </div>
           <Button>Сменить</Button>
         </form>
       </Form>
