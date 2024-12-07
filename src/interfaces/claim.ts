@@ -1,9 +1,9 @@
 export interface IClaim {
-  id: number 
-  start_time: Date 
+  id: number
+  start_time: Date
   end_time: Date
   place: string
-  format: "ONLINE" | "OFFLINE" | "ONOFFLINE"
+  format: claimFormat
 }
 
 export interface IClaimFile {
@@ -12,8 +12,14 @@ export interface IClaimFile {
 }
 
 export interface IClaimCreate {
-  start_time: Date 
+  start_time: Date
   end_time: Date
   place: string
-  format: "ONLINE" | "OFFLINE" | "ONOFFLINE"
+  format: claimFormat
+}
+
+export enum claimFormat {
+  ONLINE = "ONLINE",
+  OFFLINE = "OFFLINE",
+  ONLINEOFFLINE = "ONLINEOFFLINE",
 }

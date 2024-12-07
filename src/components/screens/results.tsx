@@ -1,25 +1,25 @@
 import {
   Table,
   TableBody,
-  TableCell,
+  // TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "../ui/table"
-import { format } from "date-fns"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "../ui/pagination"
-import Loader from "../ui/loader"
+// import { format } from "date-fns"
+// import {
+//   Pagination,
+//   PaginationContent,
+//   PaginationEllipsis,
+//   PaginationItem,
+//   PaginationLink,
+//   PaginationNext,
+//   PaginationPrevious,
+// } from "../ui/pagination"
+// import Loader from "../ui/loader"
 
 const ResultsScreen = () => {
-  const isResultsLoading = false
+  // const isResultsLoading = false
   return (
     <div className="w-full p-8 relative bg-white rounded-3xl flex flex-col gap-8">
       <Table>

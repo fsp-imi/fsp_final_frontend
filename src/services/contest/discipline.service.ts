@@ -20,7 +20,7 @@ export const DisciplineService = {
     return response.data
   },
 
-  async getBySportTypes(data: string[]) {
+  async getBySportTypes(data: string[] | number[]) : Promise<IDiscipline[]>{
     const response = await instance({
       url: `/contests/disciplines/by_sport_type${
         data.length > 0 ? "?sporttype=" : ""

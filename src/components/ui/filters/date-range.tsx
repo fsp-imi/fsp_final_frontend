@@ -33,8 +33,6 @@ const DateRangeFilter = () => {
     to: dateend ? new Date(formatDateString(dateend)) : undefined,
   })
 
-  console.log(date, datestart, dateend)
-
   return (
     <Popover>
       <PopoverTrigger asChild>

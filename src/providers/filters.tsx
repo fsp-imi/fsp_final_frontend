@@ -37,7 +37,7 @@ interface IFiltersContext {
   setCurPage: (value: string) => void
   clearAllFilters: () => void
   hasActiveFilters: () => boolean
-  handleAgeGroups: (sex: boolean, agestart?: number, ageend?: number) => void
+  handleAgeGroups: (sex: boolean, agestart: number, ageend?: number) => void
   activeSportTypes: string[]
   activeDisciplines: string[]
   activeContestTypes: string[]
