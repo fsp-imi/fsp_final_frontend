@@ -64,6 +64,8 @@ const Filters = () => {
     hasActiveFilters,
     dateend,
     datestart,
+    ageend,
+    agestart,
     male,
     female,
     mincontestant,
@@ -142,10 +144,28 @@ const Filters = () => {
             {"Минимальное количество участников: " + mincontestant}
           </Badge>
         )}
+        {agestart && (
+          <Badge
+            onClick={() => {
+              handleClearFilter("agestart")
+            }}
+          >
+            {"От: " + agestart + "лет"}
+          </Badge>
+        )}
+        {ageend && (
+          <Badge
+            onClick={() => {
+              handleClearFilter("ageend")
+            }}
+          >
+            {"До: " + ageend + "лет"}
+          </Badge>
+        )}
         {maxcontestant && (
           <Badge
             onClick={() => {
-              handleClearFilter("maxcontestant")
+              handleClearFilter("ageend")
             }}
           >
             {"Максимальное количество участников: " + maxcontestant}

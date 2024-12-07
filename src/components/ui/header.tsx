@@ -40,8 +40,19 @@ const Header = () => {
               <Link to="/">Главная</Link>
             </SheetClose>
             <SheetClose asChild>
+              <Link to="/personal" className="">
+                Личный кабинет
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
               <Link to="/profile" className="">
                 Профиль
+              </Link>
+            </SheetClose>
+
+            <SheetClose asChild>
+              <Link to="/profile/federation" className="">
+                Профиль федерации
               </Link>
             </SheetClose>
             <SheetClose asChild>
@@ -99,7 +110,7 @@ const Header = () => {
                   Профиль
                 </DropdownMenuItem>
               </Link>
-              <Link to="/profile">
+              <Link to="/profile/federation">
                 <DropdownMenuItem>
                   <UserRoundPen />
                   Профиль федерации

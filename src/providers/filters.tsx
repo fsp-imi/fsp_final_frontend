@@ -37,6 +37,7 @@ interface IFiltersContext {
   setCurPage: (value: string) => void
   clearAllFilters: () => void
   hasActiveFilters: () => boolean
+  handleAgeGroups: (sex: boolean, agestart?: number, ageend?: number) => void
   activeSportTypes: string[]
   activeDisciplines: string[]
   activeContestTypes: string[]
@@ -82,6 +83,7 @@ export const FiltersContext = createContext<IFiltersContext>({
   isActive: () => false,
   clearAllFilters: () => {},
   hasActiveFilters: () => false,
+  handleAgeGroups: () => {},
   activeSportTypes: [],
   activeDisciplines: [],
   activeContestTypes: [],
@@ -227,6 +229,24 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
     setSearchParams(params)
   }
 
+  const handleAgeGroups = (sex: boolean, start: number, end?: number) => {
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (sex) params.set("male", "Мужской")
+    if (!sex) params.set("female", "Женский")
+
+    if (male && sex) params.delete("male")
+    if (female && !sex) params.delete("female")
+
+    if (start) params.set("agestart", start.toString())
+    else params.delete("agestart")
+
+    if (end) params.set("ageend", end.toString())
+    else params.delete("ageend")
+
+    setSearchParams(params)
+  }
+
   const handleGenderClear = () => {
     const params = new URLSearchParams(searchParams.toString())
 
@@ -279,6 +299,7 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
         isActive,
         clearAllFilters,
         hasActiveFilters,
+        handleAgeGroups,
         activeSportTypes,
         activeDisciplines,
         activeContestTypes,

@@ -27,6 +27,7 @@ const ContestSearch = () => {
     contests: data,
     isContestsLoading,
     setCurPage,
+    cities,
   } = useContext(FiltersContext)
 
   return (
@@ -55,29 +56,35 @@ const ContestSearch = () => {
               </TableCell>
             </TableRow>
           ) : data && data.data.contests && data.data.contests.length > 0 ? (
-            data.data.contests.map((contest) => (
-              <TableRow key={contest.id}>
-                <TableCell>
-                  {contest.name}{" "}
-                  {data.data.disciplines[contest.id.toString()].map(
-                    (discipline, index) => (
-                      <span key={index} className="">
-                        {discipline}{" "}
-                      </span>
-                    )
-                  )}
-                  {data.data.ages[contest.id.toString()].map((age, index) => (
-                    <span key={index}>{age} </span>
-                  ))}
-                </TableCell>
-                <TableCell>
-                  {format(contest.start_time, "dd.MM.yyyy")}-
-                  {format(contest.end_time, "dd.MM.yyyy")}
-                </TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            ))
+            data.data.contests.map((contest) => {
+              const city = cities.find((item) => item.id === contest.place)
+
+              return (
+                <TableRow key={contest.id}>
+                  <TableCell>
+                    {contest.name}{" "}
+                    {data.data.disciplines[contest.id.toString()].map(
+                      (discipline, index) => (
+                        <span key={index} className="">
+                          {discipline}{" "}
+                        </span>
+                      )
+                    )}
+                    {data.data.ages[contest.id.toString()].map((age, index) => (
+                      <span key={index}>{age} </span>
+                    ))}
+                  </TableCell>
+                  <TableCell>
+                    {format(contest.start_time, "dd.MM.yyyy")}-
+                    {format(contest.end_time, "dd.MM.yyyy")}
+                  </TableCell>
+                  <TableCell>
+                    {city && city.name},{city && city.region.name},
+                    {city && city.region.district.name}
+                  </TableCell>
+                </TableRow>
+              )
+            })
           ) : (
             <TableRow>
               <TableCell>
