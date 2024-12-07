@@ -18,6 +18,7 @@ import { useUserStore } from "@/store/user"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { UserService } from "@/services/user/user"
 import { useEffect } from "react"
+import { Card } from "../card"
 
 const ProfileForm = () => {
   const { data: user, isLoading } = useQuery({
@@ -48,7 +49,7 @@ const ProfileForm = () => {
   if (isPending || isLoading || isAuthLoading) return <Loader />
 
   return (
-    <div className="py-8 px-10 rounded-3xl flex flex-col w-auto bg-white gap-8">
+    <Card className="py-8 px-10 rounded-3xl flex flex-col w-auto bg-white gap-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -121,7 +122,7 @@ const ProfileForm = () => {
           <Button type="submit">Сохранить</Button>
         </form>
       </Form>
-    </div>
+    </Card>
   )
 }
 
