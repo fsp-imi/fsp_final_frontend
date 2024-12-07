@@ -4,7 +4,7 @@ import { IDistrict } from "../../interfaces/district"
 export const DistrictService = {
   async getAll(): Promise<IDistrict[]> {
     const response = await instance({
-      url: `/countryapi/districts`,
+      url: `/countries/districts`,
       method: "GET",
     })
 
@@ -13,7 +13,7 @@ export const DistrictService = {
 
   async getById(id: string | number): Promise<IDistrict> {
     const response = await instance({
-      url: `/countryapi/districts/${id}`,
+      url: `/countries/districts/${id}`,
       method: "GET",
     })
 

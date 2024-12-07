@@ -27,7 +27,7 @@ const GenderGroupFilter = () => {
           onClick={() => {
             toggleFilter("female", "Женский")
           }}
-          checked={isActive("male", "Мужской")}
+          checked={isActive("female", "Женский")}
           id={`woman`}
         />
         <label

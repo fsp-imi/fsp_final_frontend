@@ -4,7 +4,7 @@ import { IGetAllCategories, IGetCategory } from "../../interfaces/category"
 export const CategoriesService = {
   async getAll(): Promise<IGetAllCategories> {
     const response = await instance({
-      url: `/contestapi/categories`,
+      url: `/contests/categories`,
       method: "GET",
     })
 
@@ -13,7 +13,7 @@ export const CategoriesService = {
 
   async getById(id: string | number): Promise<IGetCategory> {
     const response = await instance({
-      url: `/contestapi/categories/${id}`,
+      url: `/contests/categories/${id}`,
       method: "GET",
     })
 

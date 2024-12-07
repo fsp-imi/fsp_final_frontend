@@ -1,12 +1,10 @@
 import { instance } from "../../api/api.interceptor"
-import {
-  ISportType,
-} from "../../interfaces/sport-type"
+import { ISportType } from "../../interfaces/sport-type"
 
 export const SportTypeService = {
   async getAll(): Promise<ISportType[]> {
     const response = await instance({
-      url: "/contestapi/sporttypes",
+      url: "/contests/sporttypes",
       method: "GET",
     })
 
@@ -15,7 +13,7 @@ export const SportTypeService = {
 
   async getById(id: string | number): Promise<ISportType> {
     const response = await instance({
-      url: `/contestapi/sporttypes/${id}`,
+      url: `/contests/sporttypes/${id}`,
       method: "GET",
     })
 

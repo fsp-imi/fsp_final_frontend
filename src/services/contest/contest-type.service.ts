@@ -6,7 +6,7 @@ import {
 export const ContestTypeService = {
   async getAll(): Promise<IContestType[]> {
     const response = await instance({
-      url: `/contestapi/contesttypes/`,
+      url: `/contests/contesttypes/`,
       method: "GET",
     })
 
@@ -15,7 +15,7 @@ export const ContestTypeService = {
 
   async getById(id: string | number): Promise<IContestType> {
     const response = await instance({
-      url: `/contestapi/contesttypes/${id}`,
+      url: `/contests/contesttypes/${id}`,
       method: "GET",
     })
 

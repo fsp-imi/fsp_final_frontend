@@ -2,7 +2,6 @@ import Loader from "@/components/ui/loader"
 
 import { ICity } from "@/interfaces/city"
 import { IContestType } from "@/interfaces/contest-type"
-import { ICountry } from "@/interfaces/country"
 import { IDatePicker } from "@/interfaces/date-picker"
 import { IDiscipline } from "@/interfaces/discipline"
 import { IDistrict } from "@/interfaces/district"
@@ -12,20 +11,21 @@ import { ContestTypeService } from "@/services/contest/contest-type.service"
 import { DisciplineService } from "@/services/contest/discipline.service"
 import { SportTypeService } from "@/services/contest/sport-type.service"
 import { CityService } from "@/services/country/city.service"
-import { CountryService } from "@/services/country/country.service"
 import { DistrictService } from "@/services/country/district.service"
 import { RegionService } from "@/services/country/region.service"
 import { createContext, ReactNode, useCallback } from "react"
 import { useLocation, useSearchParams } from "react-router-dom"
-import { useQuery } from "@tanstack/react-query"
+import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import { formatDate } from "@/utils/format-date"
+import { IGetAllContests } from "@/interfaces/contest"
+import { ContestService } from "@/services/contest/contest.service"
 
 interface IFiltersContext {
+  contests: IGetAllContests | undefined
   sporttypes: ISportType[]
   disciplines: IDiscipline[]
   contesttypes: IContestType[]
   regions: IRegion[]
-  countries: ICountry[]
   cities: ICity[]
   districts: IDistrict[]
   toggleFilter: (filterName: string, value: string) => void
@@ -35,6 +35,8 @@ interface IFiltersContext {
   handleClearFilter: (name: string) => void
   isActive: (filterName: string, value: string) => boolean
   setCurPage: (value: string) => void
+  clearAllFilters: () => void
+  hasActiveFilters: () => boolean
   activeSportTypes: string[]
   activeDisciplines: string[]
   activeContestTypes: string[]
@@ -50,27 +52,27 @@ interface IFiltersContext {
   isDisciplinesLoading: boolean
   isContestTypesLoading: boolean
   isRegionsLoading: boolean
-  isCountriesLoading: boolean
   isCitiesLoading: boolean
   isDistrictsLoading: boolean
+  isContestsLoading: Boolean
   cur_page: string
 }
 
 export const FiltersContext = createContext<IFiltersContext>({
+  contests: undefined,
   sporttypes: [],
   disciplines: [],
   contesttypes: [],
   regions: [],
-  countries: [],
   districts: [],
   cities: [],
   isSportTypesLoading: true,
   isDisciplinesLoading: true,
   isContestTypesLoading: true,
   isCitiesLoading: true,
-  isCountriesLoading: true,
   isDistrictsLoading: true,
   isRegionsLoading: true,
+  isContestsLoading: true,
   toggleFilter: () => {},
   handleGenderClear: () => {},
   handleFilterChange: () => {},
@@ -78,6 +80,8 @@ export const FiltersContext = createContext<IFiltersContext>({
   handleClearFilter: () => {},
   setCurPage: () => {},
   isActive: () => false,
+  clearAllFilters: () => {},
+  hasActiveFilters: () => false,
   activeSportTypes: [],
   activeDisciplines: [],
   activeContestTypes: [],
@@ -111,6 +115,16 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
   const dateend = searchParams.get("dateend") || ""
   const cur_page = searchParams.get("cur_page") || ""
 
+  const getAllContests = useCallback(() => {
+    return ContestService.getAll(searchParams.toString())
+  }, [searchParams])
+
+  const { data: contests, isLoading: isContestsLoading } = useQuery({
+    queryKey: ["contests", searchParams.toString()],
+    queryFn: getAllContests,
+    placeholderData: keepPreviousData,
+  })
+
   const { data: sporttypes, isLoading: isSportTypesLoading } = useQuery({
     queryKey: ["sporttypes"],
     queryFn: SportTypeService.getAll,
@@ -129,11 +143,6 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
   const { data: regions, isLoading: isRegionsLoading } = useQuery({
     queryKey: ["regions"],
     queryFn: RegionService.getAll,
-  })
-
-  const { data: countries, isLoading: isCountriesLoading } = useQuery({
-    queryKey: ["countries"],
-    queryFn: CountryService.getAll,
   })
 
   const { data: districts, isLoading: isDistrictsLoading } = useQuery({
@@ -202,7 +211,6 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
   const handleFilterChange = (name: string, value: string) => {
     const newUrl = updateSearchParam(name, value)
     setSearchParams(newUrl)
-    // window.history.replaceState(null, "", `?${searchParams.toString()}`)
   }
 
   const handleDateRangeFilters = (date: IDatePicker) => {
@@ -229,7 +237,19 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const setCurPage = (value: string) => {
-    handleFilterChange("page", value)
+    handleFilterChange("cur_page", value)
+  }
+
+  const clearAllFilters = () => {
+    const params = new URLSearchParams()
+    setSearchParams(params)
+  }
+
+  const hasActiveFilters = () => {
+    for (const value of searchParams.values()) {
+      if (value) return true
+    }
+    return false
   }
 
   if (isRegionsLoading) return <Loader />
@@ -237,26 +257,28 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
   return (
     <FiltersContext.Provider
       value={{
+        contests,
         sporttypes: sporttypes || [],
         disciplines: disciplines || [],
         contesttypes: contesttypes || [],
         regions: regions || [],
         districts: districts || [],
         cities: cities || [],
-        countries: countries || [],
         isSportTypesLoading,
         isDisciplinesLoading,
         isContestTypesLoading,
         isCitiesLoading,
-        isCountriesLoading,
         isDistrictsLoading,
         isRegionsLoading,
+        isContestsLoading,
         toggleFilter,
         handleFilterChange,
         handleDateRangeFilters,
         handleGenderClear,
         handleClearFilter,
         isActive,
+        clearAllFilters,
+        hasActiveFilters,
         activeSportTypes,
         activeDisciplines,
         activeContestTypes,

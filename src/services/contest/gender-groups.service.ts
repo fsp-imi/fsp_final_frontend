@@ -3,7 +3,7 @@ import { instance } from "../../api/api.interceptor"
 export const GenderGroupsService = {
   async getAll() {
     const response = await instance({
-      url: `/contestapi/gendergroups`,
+      url: `/contests/gendergroups`,
       method: "GET",
     })
 
@@ -12,7 +12,7 @@ export const GenderGroupsService = {
 
   async getById(id: string | number) {
     const response = await instance({
-      url: `/contestapi/gendergroups/${id}`,
+      url: `/contests/gendergroups/${id}`,
       method: "GET",
     })
 

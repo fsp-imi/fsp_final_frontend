@@ -4,7 +4,8 @@ import { ICountry } from "../../interfaces/country"
 export const CountryService = {
   async getAll(): Promise<ICountry[]> {
     const response = await instance({
-      url: `/countryapi/countries`,
+      url: `/countries/`,
+
       method: "GET",
     })
 
@@ -13,7 +14,7 @@ export const CountryService = {
 
   async getById(id: string | number): Promise<ICountry> {
     const response = await instance({
-      url: `/countryapi/countries/${id}`,
+      url: `/countries/${id}`,
       method: "GET",
     })
 

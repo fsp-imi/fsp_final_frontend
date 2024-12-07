@@ -4,7 +4,7 @@ import { ICity } from "../../interfaces/city"
 export const CityService = {
   async getAll(): Promise<ICity[]> {
     const response = await instance({
-      url: `/countryapi/cities`,
+      url: `/countries/cities`,
       method: "GET",
     })
 
@@ -13,7 +13,7 @@ export const CityService = {
 
   async getById(id: string | number): Promise<ICity> {
     const response = await instance({
-      url: `/countryapi/cities/${id}`,
+      url: `/countries/cities/${id}`,
       method: "GET",
     })
 

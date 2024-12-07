@@ -6,6 +6,7 @@ import { useLocation, useNavigate, useSearchParams } from "react-router"
 import { getToken } from "../services/auth/auth.helper"
 
 const authRoutes = ["/login", "/registration"]
+const wihtoutAuthRoutes = ["/contest-search"]
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { check, isAuth, isLoading, clearError } = useUserStore()
@@ -35,13 +36,18 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     if (!isLoading) {
       if (token) {
+        if (wihtoutAuthRoutes.includes(pathname)) {
+        }
         if (authRoutes.includes(pathname)) {
           navigateWithoutLosingSearchParams("/")
         } else {
           navigateWithoutLosingSearchParams(oldPathname)
         }
       } else {
-        if (!authRoutes.includes(pathname)) {
+        if (
+          !wihtoutAuthRoutes.includes(pathname) &&
+          !authRoutes.includes(pathname)
+        ) {
           navigateWithoutLosingSearchParams("/login")
         }
       }

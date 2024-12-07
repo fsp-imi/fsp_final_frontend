@@ -48,7 +48,7 @@ const RegistrationScreen = () => {
               control={form.control}
               name="first_name"
               render={({ field }) => (
-                <FormItem className="w-full sm:max-w-[48%]">
+                <FormItem className="w-full sm:w-[calc((100%-8px)/2)]">
                   <FormLabel>Имя</FormLabel>
                   <FormControl>
                     <Input className="w-full" placeholder="Иван" {...field} />
@@ -63,7 +63,7 @@ const RegistrationScreen = () => {
               control={form.control}
               name="last_name"
               render={({ field }) => (
-                <FormItem className="w-full sm:max-w-[48%]">
+                <FormItem className="w-full  sm:w-[calc((100%-8px)/2)]">
                   <FormLabel>Фамилия</FormLabel>
                   <FormControl>
                     <Input placeholder="Иванов" {...field} />

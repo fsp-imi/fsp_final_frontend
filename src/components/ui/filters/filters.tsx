@@ -1,22 +1,21 @@
-import { IFilter } from "@/interfaces/filter"
 import SportTypeFilter from "./sport-type"
 import DisciplineFilter from "./discipline"
-import ProgramFilter from "./program"
 import ContestmentsFilter from "./contestments"
 import GenderGroupFilter from "./gender-group"
 import AgeGroupFilter from "./age-group"
 import DateRangeFilter from "./date-range"
 import ContestTypeFilter from "./contest-type"
-import { useContext, useState } from "react"
+import FilterItem from "../filter-item"
+
+import { IFilter } from "@/interfaces/filter"
+import { useContext } from "react"
 import { FiltersContext } from "@/providers/filters"
 import { Badge } from "../badge"
 import { convertDate } from "@/utils/format-date"
-import FilterItem from "../filter-item"
 
 const allFilters: IFilter[] = [
   { id: 0, label: "Вид спорта", isOpen: false, children: <SportTypeFilter /> },
   { id: 1, label: "Дисциплина", isOpen: false, children: <DisciplineFilter /> },
-  { id: 2, label: "Программа", isOpen: false, children: <ProgramFilter /> },
   {
     id: 3,
     label: "Количество участников",
@@ -51,8 +50,6 @@ const allFilters: IFilter[] = [
 ]
 
 const Filters = () => {
-  const [filters, setFilters] = useState<IFilter[]>(allFilters)
-
   const {
     sporttypes,
     disciplines,
@@ -63,6 +60,8 @@ const Filters = () => {
     handleFilterChange,
     handleGenderClear,
     handleClearFilter,
+    clearAllFilters,
+    hasActiveFilters,
     dateend,
     datestart,
     male,
@@ -72,7 +71,7 @@ const Filters = () => {
   } = useContext(FiltersContext)
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="w-full flex flex-col gap-2">
       {/* Облако включенных фильтров */}
       <div className="flex flex-row gap-2 flex-wrap">
         {activeSportTypes.length > 0 && (
@@ -152,28 +151,22 @@ const Filters = () => {
             {"Максимальное количество участников: " + maxcontestant}
           </Badge>
         )}
-        <Badge>Удалить все</Badge>
-        <Badge>Сохранить</Badge>
+        {hasActiveFilters() ? (
+          <Badge
+            onClick={() => {
+              clearAllFilters()
+            }}
+          >
+            Удалить все
+          </Badge>
+        ) : null}
       </div>
 
       {/* Фильтры */}
       <div className="flex flex-row gap-2 flex-wrap">
         {/* Фильтры */}
-        {filters.map((filter) => (
-          <div key={filter.id} className="relative">
-            <FilterItem
-              setIsOpen={(isOpen: boolean) =>
-                setFilters((prev) =>
-                  prev.map((item) =>
-                    item.id === filter.id
-                      ? { ...item, isOpen: isOpen }
-                      : { ...item, isOpen: false }
-                  )
-                )
-              }
-              filter={filter}
-            />
-          </div>
+        {allFilters.map((filter) => (
+          <FilterItem key={filter.id} filter={filter} />
         ))}
       </div>
     </div>

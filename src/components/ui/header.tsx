@@ -1,6 +1,7 @@
+import Loader from "./loader"
 import Logo from "./logo"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui//avatar"
+import { Avatar } from "@/components/ui//avatar"
 import { Link } from "react-router-dom"
 import {
   DropdownMenu,
@@ -8,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./dropdown-menu"
-import { LogOut, MenuIcon, User } from "lucide-react"
+import { LogOut, MenuIcon, User, UserRoundPen } from "lucide-react"
 import { useUserStore } from "@/store/user"
 import {
   NavigationMenu,
@@ -17,9 +18,10 @@ import {
   navigationMenuTriggerStyle,
 } from "./navigation-menu"
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./sheet"
+import { Button } from "./button"
 
 const Header = () => {
-  const logout = useUserStore((state) => state.logout)
+  const { user, isLoading, logout } = useUserStore()
 
   return (
     <div className="w-full h-16 px-8 py-3 border-b-[1px] border-gray rounded-b-3xl flex flex-row justify-between items-center bg-white">
@@ -73,26 +75,47 @@ const Header = () => {
         </NavigationMenu>
 
         {/* Аватар */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="mr-8">
-            <Link to="/profile">
-              <DropdownMenuItem>
-                <User />
-                Профиль
+        {isLoading ? (
+          <Loader />
+        ) : user ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Avatar className="flex justify-center items-center bg-gray">
+                {user &&
+                  user?.first_name[0].toUpperCase() +
+                    user?.last_name[0].toUpperCase()}
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="mr-8">
+              <Link to="/personal">
+                <DropdownMenuItem>
+                  <User />
+                  Личный кабинет
+                </DropdownMenuItem>
+              </Link>
+              <Link to="/profile">
+                <DropdownMenuItem>
+                  <UserRoundPen />
+                  Профиль
+                </DropdownMenuItem>
+              </Link>
+              <Link to="/profile">
+                <DropdownMenuItem>
+                  <UserRoundPen />
+                  Профиль федерации
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem onClick={() => logout()}>
+                <LogOut />
+                Выйти
               </DropdownMenuItem>
-            </Link>
-            <DropdownMenuItem onClick={() => logout()}>
-              <LogOut />
-              Выйти
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <Link to="/login">
+            <Button>Войти</Button>
+          </Link>
+        )}
       </div>
     </div>
   )

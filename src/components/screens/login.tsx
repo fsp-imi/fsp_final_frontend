@@ -26,12 +26,12 @@ const LoginScreen = () => {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    login(values)
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    await login(values)
   }
 
   return (
-    <div className="w-screen min-h-screen flex justify-center items-center bg-[url('/registration.jpg')] bg-cover px-4">
+    <div className="flex-1 relative flex flex-col justify-center items-center py-8 px-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

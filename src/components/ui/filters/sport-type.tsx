@@ -9,7 +9,7 @@ const SportTypeFilter = () => {
     useContext(FiltersContext)
 
   return (
-    <div className="">
+    <>
       {isSportTypesLoading ? (
         <Loader />
       ) : sporttypes && sporttypes.length > 0 ? (
@@ -17,13 +17,16 @@ const SportTypeFilter = () => {
           {sporttypes.map((sporttype) => (
             <div key={sporttype.id} className="flex items-center space-x-2">
               <Checkbox
+                onClick={() =>
+                  toggleFilter("sporttype", sporttype.id.toString())
+                }
                 checked={isActive("sporttype", sporttype.id.toString())}
                 id={`sporttype-${sporttype.id}`}
               />
               <label
                 htmlFor={`sporttype-${sporttype.id}`}
                 onClick={() =>
-                  toggleFilter("contesttype", sporttype.id.toString())
+                  toggleFilter("sporttype", sporttype.id.toString())
                 }
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
@@ -35,7 +38,7 @@ const SportTypeFilter = () => {
       ) : (
         <div className="text-xs">Видов спорта нет</div>
       )}
-    </div>
+    </>
   )
 }
 

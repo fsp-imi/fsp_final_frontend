@@ -4,7 +4,7 @@ import { IAgeGroup } from "../../interfaces/age-group"
 export const AgeGroupService = {
   async getAll(): Promise<IAgeGroup[]> {
     const response = await instance({
-      url: `/contestapi/agegroups/`,
+      url: `/contests/agegroups/`,
       method: "GET",
     })
 
@@ -13,7 +13,7 @@ export const AgeGroupService = {
 
   async getById(id: string | number): Promise<IAgeGroup[]> {
     const response = await instance({
-      url: `/contestapi/agegroups/${id}`,
+      url: `/contests/agegroups/${id}`,
       method: "GET",
     })
 

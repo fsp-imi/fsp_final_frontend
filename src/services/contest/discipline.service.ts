@@ -4,7 +4,7 @@ import { IDiscipline } from "../../interfaces/discipline"
 export const DisciplineService = {
   async getAll(): Promise<IDiscipline[]> {
     const response = await instance({
-      url: `/contestapi/disciplines`,
+      url: `/contests/disciplines`,
       method: "GET",
     })
 
@@ -13,7 +13,7 @@ export const DisciplineService = {
 
   async getById(id: string | number): Promise<IDiscipline> {
     const response = await instance({
-      url: `/contestapi/disciplines/${id}`,
+      url: `/contests/disciplines/${id}`,
       method: "GET",
     })
 
@@ -22,7 +22,7 @@ export const DisciplineService = {
 
   async getBySportTypes(data: string[]) {
     const response = await instance({
-      url: `/contestapi/disciplines/by_sport_type${
+      url: `/contests/disciplines/by_sport_type${
         data.length > 0 ? "?sporttype=" : ""
       }${data.join("&sporttype=")}`,
       method: "GET",

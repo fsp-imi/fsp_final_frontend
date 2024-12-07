@@ -17,10 +17,10 @@ const ContestTypeFilter = () => {
           <div key={contesttype.id} className="flex items-center space-x-2">
             <Checkbox
               checked={isActive("contesttype", contesttype.id.toString())}
-              id={`agegroup-${contesttype.id}`}
+              id={`contesttype-${contesttype.id}`}
             />
             <label
-              htmlFor={`agegroup-${contesttype.id}`}
+              htmlFor={`contesttype-${contesttype.id}`}
               onClick={() =>
                 toggleFilter("contesttype", contesttype.id.toString())
               }

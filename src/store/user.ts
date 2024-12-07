@@ -15,11 +15,11 @@ interface IUserStore {
   user: IUser | null
   isError: boolean
   error: string | null
-  setUser: (data: IUser) => void
+  setUser: (data: IUser) => Promise<void>
   check: () => void
-  login: (data: ILoginPassword) => void
-  register: (data: IRegistrationData) => void
-  logout: () => void
+  login: (data: ILoginPassword) => Promise<void>
+  register: (data: IRegistrationData) => Promise<void>
+  logout: () => Promise<void>
   clearError: () => {}
 }
 
@@ -29,7 +29,7 @@ export const useUserStore = create<IUserStore>((set) => ({
   user: null,
   isError: false,
   error: null,
-  setUser: (data: IUser) => {
+  setUser: async (data: IUser) => {
     set({
       user: data,
     })
@@ -87,12 +87,17 @@ export const useUserStore = create<IUserStore>((set) => ({
 
     try {
       const response = await AuthService.login(data)
+
       setToken(response.token)
+
+      const user = await UserService.getProfile()
+
       set({
         isLoading: false,
         isAuth: true,
         isError: false,
         error: null,
+        user,
       })
     } catch (error: any) {
       set({
@@ -144,6 +149,7 @@ export const useUserStore = create<IUserStore>((set) => ({
       isAuth: false,
       isError: false,
       error: null,
+      user: null,
     })
   },
   clearError: async () => {
