@@ -43,12 +43,12 @@ const FederationScreen = () => {
     mutationFn: FederationService.changeProfile,
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: ["get federation"],
+        queryKey: ["get agent", "get federation"],
       }),
   })
 
   const { data: agent, isLoading: isAgentLoading } = useQuery({
-    queryKey: ["get agent"],
+    queryKey: ["get agent", federation],
     queryFn: async () => {
       return federation && federation.agent
         ? await UserService.getUser(federation.agent)
@@ -62,7 +62,7 @@ const FederationScreen = () => {
   if (federation)
     return (
       <div className="w-full flex flex-col gap-6 bg-white px-8 py-8 rounded-3xl">
-        <div className="text-3xl font-medium">Федерация {federation.name}</div>
+        <div className="text-3xl font-semibold">Федерация {federation.name}</div>
 
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>

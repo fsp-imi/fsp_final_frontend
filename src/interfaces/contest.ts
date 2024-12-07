@@ -5,9 +5,9 @@ export interface IContest {
   name: string
   start_time: string
   end_time: string
-  place: number
+  place: string
   contest_type: number
-  format: string
+  format: "ONLINE" | "OFFLINE" | "ONOFFLINE"
   status: string
 }
 

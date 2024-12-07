@@ -40,7 +40,7 @@ const Header = () => {
               <Link to="/">Главная</Link>
             </SheetClose>
             <SheetClose asChild>
-              <Link to="/personal" className="">
+              <Link to="/lk" className="">
                 Личный кабинет
               </Link>
             </SheetClose>
@@ -98,7 +98,7 @@ const Header = () => {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="mr-8">
-              <Link to="/personal">
+              <Link to="/lk">
                 <DropdownMenuItem>
                   <User />
                   Личный кабинет

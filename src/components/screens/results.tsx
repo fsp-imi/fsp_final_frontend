@@ -1,6 +1,3 @@
-import Filters from "../ui/filters/filters"
-import Loader from "../ui/loader"
-
 import {
   Table,
   TableBody,
@@ -19,20 +16,12 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../ui/pagination"
-import { useContext } from "react"
-import { FiltersContext } from "@/providers/filters"
+import Loader from "../ui/loader"
 
-const ContestSearch = () => {
-  const {
-    contests: data,
-    isContestsLoading,
-    setCurPage,
-  } = useContext(FiltersContext)
-
+const ResultsScreen = () => {
+  const isResultsLoading = false
   return (
     <div className="w-full p-8 relative bg-white rounded-3xl flex flex-col gap-8">
-      <Filters />
-
       <Table>
         <TableHeader>
           <TableRow>
@@ -45,11 +34,10 @@ const ContestSearch = () => {
               Место проведения (страна (-ы), субъект РФ, город) (спортивная
               база, центр)
             </TableHead>
-            <TableHead>Формат</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {isContestsLoading ? (
+          {/* {isResultsLoading ? (
             <TableRow>
               <TableCell>
                 <Loader />
@@ -77,7 +65,6 @@ const ContestSearch = () => {
                     {contest.end_time && format(contest.end_time, "dd.MM.yyyy")}
                   </TableCell>
                   <TableCell>{contest.place}</TableCell>
-                  <TableCell>{contest.format}</TableCell>
                 </TableRow>
               )
             })
@@ -89,11 +76,11 @@ const ContestSearch = () => {
                 </div>
               </TableCell>
             </TableRow>
-          )}
+          )} */}
         </TableBody>
       </Table>
 
-      {data && data.pages && (
+      {/* {data && data.pages && (
         <Pagination>
           <PaginationContent>
             <PaginationItem
@@ -163,9 +150,9 @@ const ContestSearch = () => {
             </PaginationItem>
           </PaginationContent>
         </Pagination>
-      )}
+      )} */}
     </div>
   )
 }
 
-export default ContestSearch
+export default ResultsScreen

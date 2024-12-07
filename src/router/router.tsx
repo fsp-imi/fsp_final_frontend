@@ -12,6 +12,10 @@ import MainLayout from "@/layout/main"
 import FederationProfile from "@/components/screens/federation-profile"
 import FiltersProvider from "@/providers/filters"
 import ResultUploadScreen from "@/components/screens/result-upload"
+import ResultsScreen from "@/components/screens/results"
+import Lk from "@/components/screens/lk"
+import ClaimScreen from "@/components/screens/claim"
+import CreateClaim from "@/components/screens/create-claim"
 
 import { Route, Routes } from "react-router-dom"
 
@@ -29,6 +33,10 @@ const Router = () => {
         <Route path="/federations" element={<FederationsScreen />} />
         <Route path="/federations/:id" element={<FederationScreen />} />
         <Route path="/result-upload" element={<ResultUploadScreen />} />
+        <Route path="/lk" element={<Lk />} />
+        <Route path="/results" element={<ResultsScreen />} />
+        <Route path="/create-claim" element={<CreateClaim />} />
+        <Route path="/claim/:id" element={<ClaimScreen />} />
         <Route
           path="/contest-search"
           element={
