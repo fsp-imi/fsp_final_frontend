@@ -67,27 +67,59 @@ const Claims = () => {
               <TableCell>{claim.status}</TableCell>
               <TableCell>
                 <div className="flex flex-col gap-1">
-                  <Badge
-                    onClick={async () => {
-                      await changeStatus({ status: "ONPROGRESS", id: claim.id })
-                    }}
-                    className="bg-green-700"
-                  >
-                    Отправить
-                  </Badge>
-                  <Link className="w-full" to={`/claim/${claim.id}`}>
-                    <Badge
-                      onClick={async () => {
-                        await changeStatus({
-                          status: "ONPROGRESS",
-                          id: claim.id,
-                        })
-                      }}
-                      className="w-full bg-green-700"
-                    >
-                      Редактировать
-                    </Badge>
-                  </Link>
+                  {claim.status === "ACCEPTED" && (
+                    <Link className="w-full" to={`/result-upload/${claim.id}`}>
+                      <Badge className="w-full bg-green-700">
+                        Загрузить результаты
+                      </Badge>
+                    </Link>
+                  )}
+                  {claim.status === "ONPROGRESS" && (
+                    <Link className="w-full" to={`/claim/${claim.id}`}>
+                      <Badge
+                        onClick={async () => {
+                          await changeStatus({
+                            status: "ONPROGRESS",
+                            id: claim.id,
+                          })
+                        }}
+                        className="w-full bg-green-700"
+                      >
+                        Посмотреть
+                      </Badge>
+                    </Link>
+                  )}
+                  {claim.status === "NEW" ||
+                    (claim.status === "MODERATE" && (
+                      <Badge
+                        onClick={async () => {
+                          await changeStatus({
+                            status: "ONPROGRESS",
+                            id: claim.id,
+                          })
+                        }}
+                        className="bg-green-700"
+                      >
+                        Отправить
+                      </Badge>
+                    ))}
+
+                  {claim.status === "NEW" ||
+                    (claim.status === "MODERATE" && (
+                      <Link className="w-full" to={`/claim/${claim.id}`}>
+                        <Badge
+                          onClick={async () => {
+                            await changeStatus({
+                              status: "ONPROGRESS",
+                              id: claim.id,
+                            })
+                          }}
+                          className="w-full bg-green-700"
+                        >
+                          Редактировать
+                        </Badge>
+                      </Link>
+                    ))}
                 </div>
               </TableCell>
             </TableRow>

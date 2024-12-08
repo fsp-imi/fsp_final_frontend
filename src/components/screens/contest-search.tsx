@@ -46,6 +46,7 @@ const ContestSearch = () => {
               база, центр)
             </TableHead>
             <TableHead>Формат</TableHead>
+            <TableHead>Результаты</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -77,6 +78,7 @@ const ContestSearch = () => {
                     {contest.end_time && format(contest.end_time, "dd.MM.yyyy")}
                   </TableCell>
                   <TableCell>{contest.place}</TableCell>
+                  <TableCell>{contest.format}</TableCell>
                   <TableCell>{contest.format}</TableCell>
                 </TableRow>
               )

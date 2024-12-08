@@ -32,7 +32,7 @@ const Router = () => {
         <Route path="/profile/federation" element={<FederationProfile />} />
         <Route path="/federations" element={<FederationsScreen />} />
         <Route path="/federations/:id" element={<FederationScreen />} />
-        <Route path="/result-upload" element={<ResultUploadScreen />} />
+        <Route path="/result-upload/:id" element={<ResultUploadScreen />} />
         <Route path="/lk" element={<Lk />} />
         <Route path="/results" element={<ResultsScreen />} />
         <Route path="/create-claim" element={<CreateClaim />} />
