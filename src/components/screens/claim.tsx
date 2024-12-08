@@ -7,7 +7,7 @@ import { SportTypeService } from "@/services/contest/sport-type.service"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useForm, useWatch } from "react-hook-form"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { z } from "zod"
 import Loader from "../ui/loader"
 import { Card } from "../ui/card"
@@ -60,6 +60,8 @@ const ClaimScreen = () => {
 
   const queryClient = useQueryClient()
 
+  const navigate = useNavigate()
+
   const sporttypevalue = useWatch({ control: form.control, name: "sporttype" })
 
   const { data: claim, isLoading: isClaimLoading } = useQuery({
@@ -97,6 +99,15 @@ const ClaimScreen = () => {
       }),
   })
 
+  const { mutate: changeStatus, isPending: isChangeStatusLoading } =
+    useMutation({
+      mutationKey: ["change status"],
+      mutationFn: ClaimService.change,
+      onSuccess: () => {
+        navigate("/lk")
+      },
+    })
+
   const onSubmit = (values: z.infer<typeof claimSchema>) => {
     if (claim) mutate({ id: claim.id, ...values })
   }
@@ -127,10 +138,12 @@ const ClaimScreen = () => {
     isSportTypesLoading ||
     isContestTypesLoading ||
     isDisciplinesLoading ||
-    isAgeGroupsLoading
+    isAgeGroupsLoading ||
+    isChangeStatusLoading
   ) {
     return <Loader />
   }
+
   if (user && claim)
     return (
       <div className="w-full bg-white rounded-3xl px-10 py-8 flex flex-col gap-8">
@@ -298,6 +311,25 @@ const ClaimScreen = () => {
                     </FormItem>
                   )}
                 />
+
+                {/* Статус */}
+                {/* 
+                <FormItem>
+                  <FormLabel>Статус</FormLabel>
+                  <FormControl>
+                    <Select disabled>
+                      <SelectTrigger className="">
+                        <SelectValue defaultValue={claim.status} />
+                      </SelectTrigger>
+                      <SelectContent>
+                         <SelectItem value="OFFLINE">Офлайн</SelectItem> 
+                        <SelectItem value="ONLINE">Онлайн</SelectItem>
+                        <SelectItem value="ONLINE/OFFLINE">Смешанно</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem> */}
 
                 {/* Уровень */}
                 <FormField
@@ -642,14 +674,60 @@ const ClaimScreen = () => {
                 />
 
                 {!user.is_staff ? (
-                  <Button className="w-[280px]" type="submit">
-                    Сохранить
-                  </Button>
+                  <div className="flex flex-row gap-2">
+                    <Button
+                      disabled={claim.status === "ONPROGRESS"}
+                      className="w-[280px]"
+                      type="submit"
+                    >
+                      {claim.status === "ONPROGRESS"
+                        ? "На проверке"
+                        : "Сохранить"}
+                    </Button>
+                    {claim.status !== "ONPROGRESS" &&
+                      claim.status !== "ACCEPTED" && (
+                        <Button
+                          onClick={async () => {
+                            await changeStatus({
+                              status: "ONPROGRESS",
+                              id: claim.id,
+                            })
+                          }}
+                          className="bg-green-700"
+                        >
+                          Отправить на проверку
+                        </Button>
+                      )}
+                  </div>
                 ) : (
                   <div className="flex flex-row gap-2">
-                    <Button className="bg-green-700">Принять</Button>
-                    <Button className="bg-red-700">Отклонить</Button>
-                    <Button className="bg-yellow-700">На доработку</Button>
+                    <Button
+                      type="button"
+                      onClick={async () => {
+                        await changeStatus({ status: "ACCEPTED", id: claim.id })
+                      }}
+                      className="bg-green-700"
+                    >
+                      Принять
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={async () => {
+                        await changeStatus({ status: "REJECTED", id: claim.id })
+                      }}
+                      className="bg-red-700"
+                    >
+                      Отклонить
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={async () => {
+                        await changeStatus({ status: "MODERATE", id: claim.id })
+                      }}
+                      className="bg-yellow-700"
+                    >
+                      На доработку
+                    </Button>
                   </div>
                 )}
               </form>

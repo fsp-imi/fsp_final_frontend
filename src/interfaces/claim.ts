@@ -1,5 +1,6 @@
 export interface IClaim {
   id: number
+  name: string
   receiver_federation?: number
   sender_federation: number
   contest_type: string
@@ -8,6 +9,7 @@ export interface IClaim {
   start_time: Date
   end_time: Date
   place: string
+  status: string
   format: claimFormat
 }
 
@@ -17,6 +19,7 @@ export interface IClaimFile {
 }
 
 export interface IClaimCreate {
+  name: string
   receiver_federation?: number
   sender_federation: number
   contest_type: string

@@ -5,9 +5,9 @@ import AdminClaims from "../ui/admin-claims"
 import { useUserStore } from "@/store/user"
 import Loader from "../ui/loader"
 import Claims from "../ui/claims"
+import { Link } from "react-router-dom"
 
 const Lk = () => {
-  // const {} = useQuery({})
   const { user, isLoading } = useUserStore()
 
   if (isLoading) return <Loader />
@@ -28,7 +28,12 @@ const Lk = () => {
               <Search className="absolute right-2 top-1.5" />
             </div>
 
-            {!user?.is_staff && <Button>Добавить</Button>}
+            {!user?.is_staff && (
+              <Link to="/create-claim">
+                {" "}
+                <Button>Добавить</Button>
+              </Link>
+            )}
           </div>
 
           {user.is_staff ? <AdminClaims /> : <Claims />}
