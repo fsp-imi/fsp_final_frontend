@@ -23,4 +23,17 @@ export const ResultService = {
 
     return response.data
   },
+
+  async create(data: FormData) {
+    const response = await instance({
+      url: "/results/upload/",
+      method: "POST",
+      data,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+
+    return response.data
+  },
 }

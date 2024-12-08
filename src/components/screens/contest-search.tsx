@@ -21,6 +21,7 @@ import {
 } from "../ui/pagination"
 import { useContext } from "react"
 import { FiltersContext } from "@/providers/filters"
+import { Link } from "react-router-dom"
 
 const ContestSearch = () => {
   const {
@@ -80,7 +81,13 @@ const ContestSearch = () => {
                   </TableCell>
                   <TableCell>{contest.place}</TableCell>
                   <TableCell>{contest.format}</TableCell>
-                  <TableCell>{contest.format}</TableCell>
+                  <TableCell>
+                    {contest.file ? (
+                      <Link to={contest.file}>Скачать</Link>
+                    ) : (
+                      "-"
+                    )}
+                  </TableCell>
                 </TableRow>
               )
             })

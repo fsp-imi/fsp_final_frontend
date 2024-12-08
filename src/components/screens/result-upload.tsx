@@ -5,11 +5,12 @@ import { Form, FormLabel } from "../ui/form"
 import { useMutation } from "@tanstack/react-query"
 import { ResultService } from "@/services/result/result"
 import { Button } from "../ui/button"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 const ResultUploadScreen = () => {
   const { id } = useParams()
   const form = useForm()
+  const navigate = useNavigate()
   const [file, setFile] = useState<File | null>(null)
   const [fields, setFields] = useState<any>({
     district: "",
@@ -33,6 +34,14 @@ const ResultUploadScreen = () => {
     onSuccess: (res, variables) => {
       const header = variables.get("header") as string
       setResults((prev) => ({ ...prev, [header]: res[header] || null }))
+    },
+  })
+
+  const { mutate: upload } = useMutation({
+    mutationKey: ["result upload"],
+    mutationFn: ResultService.create,
+    onSuccess: () => {
+      navigate("/lk")
     },
   })
 
@@ -118,11 +127,23 @@ const ResultUploadScreen = () => {
     formData.append("file", file)
 
     // Добавляем значения всех полей в FormData
-    Object.entries(fields).forEach(([key, value]) => {
-      if (value) {
-        formData.append("columns[]", JSON.stringify({ key, value }))
-      }
-    })
+    // Object.entries(fields).forEach(([key, value]) => {
+    //   console.log(value)
+    //   // if (value) {
+    //   //   value.map((val: any) => formData.append(key, val))
+    //   // }
+    // })
+
+    if (fields.district) formData.append("district", fields.district)
+    if (fields.region) formData.append("region", fields.region)
+    if (fields.participants)
+      formData.append("participants", fields.participants)
+    if (fields.points) formData.append("points", fields.points)
+    if (fields.place) formData.append("place", fields.place)
+
+    formData.append("contest_id", id)
+
+    upload(formData)
 
     console.log("Отправка всех данных:", { ...fields, contest_id: id })
   }

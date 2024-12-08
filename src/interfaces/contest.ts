@@ -9,6 +9,7 @@ export interface IContest {
   contest_type: number
   format: "ONLINE" | "OFFLINE" | "ONOFFLINE"
   status: string
+  file: string
 }
 
 interface IDisciplines {
