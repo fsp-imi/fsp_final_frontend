@@ -26,7 +26,15 @@ const Router = () => {
         <Route path="/registration" element={<RegistrationScreen />} />
       </Route>
       <Route path="/" element={<MainLayout />}>
-        <Route path="/" index element={<ContestSearch />} />
+        <Route
+          path="/"
+          index
+          element={
+            <FiltersProvider>
+              <ContestSearch />
+            </FiltersProvider>
+          }
+        />
         <Route path="/profile" element={<ProfileScreen />} />
         <Route path="/profile/federation" element={<FederationProfile />} />
         <Route path="/federations" element={<FederationsScreen />} />
