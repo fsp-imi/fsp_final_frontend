@@ -11,12 +11,42 @@ import {
   // FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
+import { useEffect, useRef } from "react"
 // import { useMutation, useQuery } from "@tanstack/react-query"
 
 const ResultUploadScreen = () => {
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
   })
+
+  const watchAllFields = form.watch() // Смотрим за всеми полями формы
+  const debounceRef = useRef<NodeJS.Timeout | null>(null)
+  const sendData = async (data: any) => {
+    console.log("Sending data to the server: ", data)
+    // Здесь мог бы быть ваш API вызов
+    // Например, await fetch('/api/data', { method: 'POST', body: JSON.stringify(data) })
+  }
+
+  useEffect(() => {
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current)
+    }
+
+    debounceRef.current = setTimeout(() => {
+      sendData(watchAllFields)
+    }, 1000) // 1000 мс = 1 секунда
+
+    // Очистка при размонтировании компонента
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current)
+      }
+    }
+  }, [watchAllFields])
+
+  // const onSubmit = () => {
+  //   // console.log(values)
+  // }
 
   return (
     <>
@@ -40,7 +70,6 @@ const ResultUploadScreen = () => {
               </div>
 
               <h1 className="text-xl">Столбцы с данными</h1>
-              <p className="text-xs text-slate-400">описание...</p>
               <div className="flex gap-4">
                 <div className="grid w-full items-center gap-1.5">
                   <FormLabel htmlFor="picture">

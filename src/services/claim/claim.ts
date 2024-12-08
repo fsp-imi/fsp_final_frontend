@@ -32,8 +32,8 @@ export const ClaimService = {
 
   async change(data: Partial<IClaim>): Promise<IClaim> {
     const response = await instance({
-      url: `/claims/${data.id}`,
-      method: "PUT",
+      url: `/claims/${data.id}/`,
+      method: "POST",
       data,
     })
 

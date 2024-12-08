@@ -93,8 +93,8 @@ const Header = () => {
             <DropdownMenuTrigger asChild>
               <Avatar className="flex justify-center items-center bg-gray">
                 {user &&
-                  user?.first_name[0].toUpperCase() +
-                    user?.last_name[0].toUpperCase()}
+                  user?.first_name[0]?.toUpperCase() +
+                    user?.last_name[0]?.toUpperCase()}
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="mr-8">
