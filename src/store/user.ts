@@ -119,11 +119,15 @@ export const useUserStore = create<IUserStore>((set) => ({
     try {
       const response = await AuthService.register(data)
       setToken(response.token)
+
+      const user = await UserService.getProfile()
+
       set({
         isLoading: false,
         isAuth: true,
         isError: false,
         error: null,
+        user,
       })
     } catch (error: any) {
       set({
