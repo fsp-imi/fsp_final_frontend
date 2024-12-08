@@ -257,7 +257,12 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const setCurPage = (value: string) => {
-    handleFilterChange("cur_page", value)
+    const params = new URLSearchParams(searchParams.toString())
+
+    params.set("page", value)
+    params.set("per_page", "10")
+
+    setSearchParams(params)
   }
 
   const clearAllFilters = () => {
@@ -266,8 +271,10 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const hasActiveFilters = () => {
-    for (const value of searchParams.values()) {
-      if (value) return true
+    for (const [key, value] of searchParams.entries()) {
+      if (key !== "page" && key !== "per_page" && value) {
+        return true
+      }
     }
     return false
   }

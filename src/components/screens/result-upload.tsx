@@ -124,84 +124,85 @@ const ResultUploadScreen = () => {
       }
     })
 
-    console.log("Отправка всех данных:", fields, id)
+    console.log("Отправка всех данных:", { ...fields, contest_id: id })
   }
 
-  return (
-    <div className="w-full h-full flex flex-col justify-center items-center text-3xl font-medium bg-white rounded-3xl p-10">
-      <div className="w-full flex flex-col gap-4">
-        <div className="text-2xl">Загрузка результатов</div>
-        <Form {...form}>
-          <form
-            onSubmit={handleSubmitAll}
-            className="w-auto h-auto flex flex-col gap-6"
-          >
-            {/* Поле для выбора файла */}
-            <div className="grid w-full items-center gap-1.5">
-              <label htmlFor="file" className="text-lg">
-                Результаты
-                <span className="text-slate-400">
-                  (&nbsp;.csv&nbsp;|&nbsp;.xls&nbsp;|&nbsp;.xlsx&nbsp;)
-                </span>
-              </label>
-              <Input
-                required
-                id="file"
-                type="file"
-                accept=".csv, .xls, .xlsx"
-                onChange={handleFileChange}
-              />
-            </div>
+  if (id)
+    return (
+      <div className="w-full h-full flex flex-col justify-center items-center text-3xl font-medium bg-white rounded-3xl p-10">
+        <div className="w-full flex flex-col gap-4">
+          <div className="text-2xl">Загрузка результатов</div>
+          <Form {...form}>
+            <form
+              onSubmit={handleSubmitAll}
+              className="w-auto h-auto flex flex-col gap-6"
+            >
+              {/* Поле для выбора файла */}
+              <div className="grid w-full items-center gap-1.5">
+                <label htmlFor="file" className="text-lg">
+                  Результаты
+                  <span className="text-slate-400">
+                    (&nbsp;.csv&nbsp;|&nbsp;.xls&nbsp;|&nbsp;.xlsx&nbsp;)
+                  </span>
+                </label>
+                <Input
+                  required
+                  id="file"
+                  type="file"
+                  accept=".csv, .xls, .xlsx"
+                  onChange={handleFileChange}
+                />
+              </div>
 
-            <h1 className="text-xl">Столбцы с данными</h1>
-            <div className="flex flex-row gap-4">
-              {[
-                { label: "Округ", name: "district" },
-                { label: "Регион", name: "region" },
-                { label: "Участники", name: "participants" },
-                { label: "Баллы", name: "points" },
-                { label: "Место", name: "place" },
-              ].map((field) => (
-                <div
-                  key={field.name}
-                  className="flex flex-col w-full justify-start gap-1.5"
-                >
-                  <FormLabel htmlFor={field.name}>
-                    {field.label}
-                    <span className="text-slate-400">( номер столбца )</span>
-                  </FormLabel>
-                  <Input
-                    id={field.name}
-                    type="text"
-                    className="placeholder:text-slate-400"
-                    placeholder="1, 3-5, 7, 9"
-                    value={fields[field.name as keyof typeof fields]}
-                    onChange={(e) => handleFieldChange(e, field.name)}
-                  />
-                  {/* Отображение результата */}
-                  {results[field.name] && (
-                    <div className="mt-2 text-sm text-gray-500">
-                      <p>Результат:</p>
-                      <ul className="overflow-hidden relative divide-y">
-                        {results[field.name]!.map((item, index) => (
-                          <li className="whitespace-nowrap p-2" key={index}>
-                            {item ? (item === "None" ? "-" : item) : "-"}
-                          </li>
-                        ))}
-                        <li className="p-2">...</li>
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+              <h1 className="text-xl">Столбцы с данными</h1>
+              <div className="flex flex-row gap-4">
+                {[
+                  { label: "Округ", name: "district" },
+                  { label: "Регион", name: "region" },
+                  { label: "Участники", name: "participants" },
+                  { label: "Баллы", name: "points" },
+                  { label: "Место", name: "place" },
+                ].map((field) => (
+                  <div
+                    key={field.name}
+                    className="flex flex-col w-full justify-start gap-1.5"
+                  >
+                    <FormLabel htmlFor={field.name}>
+                      {field.label}
+                      <span className="text-slate-400">( номер столбца )</span>
+                    </FormLabel>
+                    <Input
+                      id={field.name}
+                      type="text"
+                      className="placeholder:text-slate-400"
+                      placeholder="1, 3-5, 7, 9"
+                      value={fields[field.name as keyof typeof fields]}
+                      onChange={(e) => handleFieldChange(e, field.name)}
+                    />
+                    {/* Отображение результата */}
+                    {results[field.name] && (
+                      <div className="mt-2 text-sm text-gray-500">
+                        <p>Результат:</p>
+                        <ul className="overflow-hidden relative divide-y">
+                          {results[field.name]!.map((item, index) => (
+                            <li className="whitespace-nowrap p-2" key={index}>
+                              {item ? (item === "None" ? "-" : item) : "-"}
+                            </li>
+                          ))}
+                          <li className="p-2">...</li>
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
 
-            <Button type="submit">Отправить результаты</Button>
-          </form>
-        </Form>
+              <Button type="submit">Отправить результаты</Button>
+            </form>
+          </Form>
+        </div>
       </div>
-    </div>
-  )
+    )
 }
 
 export default ResultUploadScreen

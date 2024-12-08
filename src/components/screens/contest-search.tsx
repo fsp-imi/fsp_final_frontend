@@ -74,8 +74,9 @@ const ContestSearch = () => {
                     ))}
                   </TableCell>
                   <TableCell>
-                    {format(contest.start_time, "dd.MM.yyyy")}-
-                    {contest.end_time && format(contest.end_time, "dd.MM.yyyy")}
+                    {format(contest.start_time, "dd.MM.yyyy")}
+                    {contest.end_time &&
+                      "-" + format(contest.end_time, "dd.MM.yyyy")}
                   </TableCell>
                   <TableCell>{contest.place}</TableCell>
                   <TableCell>{contest.format}</TableCell>
@@ -154,10 +155,7 @@ const ContestSearch = () => {
 
             <PaginationItem
               onClick={() => {
-                if (
-                  data.pages.cur_page !== data.pages.total - 1 &&
-                  data.pages.cur_page !== data.pages.total
-                )
+                if (data.pages.cur_page !== data.pages.total)
                   setCurPage((Number(data.pages.cur_page) + 1).toString())
               }}
             >
