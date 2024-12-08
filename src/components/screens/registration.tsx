@@ -138,8 +138,14 @@ const RegistrationScreen = () => {
           <Button type="submit">Регистрация</Button>
 
           <div className="w-full flex flex-row justify-between">
-            <div className="underline cursor-pointer">Забыли пароль?</div>
-
+            <Link
+              to={
+                "https://fsp-imi-fsp-final-backend-5a76.twc1.net/password_reset"
+              }
+              className="underline cursor-pointer"
+            >
+              Забыли пароль?
+            </Link>
             <Link to="/login" className="text-blue-600">
               Авторизация
             </Link>

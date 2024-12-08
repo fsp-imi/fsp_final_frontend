@@ -3,7 +3,6 @@ import ErrorScreen from "@/components/screens/error"
 import FederationScreen from "@/components/screens/federation"
 import FederationsScreen from "@/components/screens/federations"
 import LoginScreen from "@/components/screens/login"
-import MainScreen from "@/components/screens/main"
 import NotFoundScreen from "@/components/screens/not-found"
 import ProfileScreen from "@/components/screens/profile"
 import RegistrationScreen from "@/components/screens/registration"
@@ -27,7 +26,7 @@ const Router = () => {
         <Route path="/registration" element={<RegistrationScreen />} />
       </Route>
       <Route path="/" element={<MainLayout />}>
-        <Route path="/" index element={<MainScreen />} />
+        <Route path="/" index element={<ContestSearch />} />
         <Route path="/profile" element={<ProfileScreen />} />
         <Route path="/profile/federation" element={<FederationProfile />} />
         <Route path="/federations" element={<FederationsScreen />} />
