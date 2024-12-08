@@ -89,20 +89,19 @@ const Claims = () => {
                       </Badge>
                     </Link>
                   )}
-                  {claim.status === "NEW" ||
-                    (claim.status === "MODERATE" && (
-                      <Badge
-                        onClick={async () => {
-                          await changeStatus({
-                            status: "ONPROGRESS",
-                            id: claim.id,
-                          })
-                        }}
-                        className="bg-green-700"
-                      >
-                        Отправить
-                      </Badge>
-                    ))}
+                  {claim.status === "NEW" && (
+                    <Badge
+                      onClick={async () => {
+                        await changeStatus({
+                          status: "ONPROGRESS",
+                          id: claim.id,
+                        })
+                      }}
+                      className="bg-green-700"
+                    >
+                      Отправить
+                    </Badge>
+                  )}
 
                   {claim.status === "NEW" ||
                     (claim.status === "MODERATE" && (
