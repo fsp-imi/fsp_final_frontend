@@ -24,7 +24,7 @@ export const ClaimService = {
     const response = await instance({
       url: `/claims/`,
       method: "POST",
-      data,
+      data: { ...data, contest_type: Number(data.contest_type) },
     })
 
     return response.data
@@ -34,7 +34,7 @@ export const ClaimService = {
     const response = await instance({
       url: `/claims/${data.id}/`,
       method: "POST",
-      data,
+      data: { ...data, contest_type: Number(data.contest_type) },
     })
 
     return response.data

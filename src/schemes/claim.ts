@@ -12,7 +12,7 @@ export const claimSchema = z.object({
   format: z.nativeEnum(claimFormat, {
     required_error: "Выберите формат проведения соревнования",
   }),
-  contest_type: z.number({ required_error: "Выберите уровень соревнования" }),
+  contest_type: z.string({ required_error: "Выберите уровень соревнования" }),
   contest_char: z.string({ required_error: "Выберите характер соревнования" }),
   sporttype: z.array(z.number()).refine((value) => value.some((item) => item), {
     message: "Выберите вид спорта",

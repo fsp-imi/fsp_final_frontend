@@ -2,7 +2,7 @@ export interface IClaim {
   id: number
   receiver_federation?: number
   sender_federation: number
-  contest_type: number
+  contest_type: string
   contest_discipline: number[]
   contest_age_group: number[]
   start_time: Date
@@ -19,7 +19,7 @@ export interface IClaimFile {
 export interface IClaimCreate {
   receiver_federation?: number
   sender_federation: number
-  contest_type: number
+  contest_type: string
   contest_discipline: number[]
   contest_age_group: number[]
   start_time: Date
