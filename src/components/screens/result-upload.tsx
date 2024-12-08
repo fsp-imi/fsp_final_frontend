@@ -11,37 +11,24 @@ import {
   // FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 // import { useMutation, useQuery } from "@tanstack/react-query"
+import debounce from "lodash.debounce"
 
 const ResultUploadScreen = () => {
   const form = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
   })
 
-  const watchAllFields = form.watch() // Смотрим за всеми полями формы
-  const debounceRef = useRef<NodeJS.Timeout | null>(null)
-  const sendData = async (data: any) => {
-    console.log("Sending data to the server: ", data)
-    // Здесь мог бы быть ваш API вызов
-    // Например, await fetch('/api/data', { method: 'POST', body: JSON.stringify(data) })
-  }
+  const watchAllFields = form.watch()
+
+  const sendDebouncedData = debounce((data) => {
+    console.log("Sending data:", data)
+    // Здесь ваш API вызов
+  }, 1000)
 
   useEffect(() => {
-    if (debounceRef.current) {
-      clearTimeout(debounceRef.current)
-    }
-
-    debounceRef.current = setTimeout(() => {
-      sendData(watchAllFields)
-    }, 1000) // 1000 мс = 1 секунда
-
-    // Очистка при размонтировании компонента
-    return () => {
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current)
-      }
-    }
+    sendDebouncedData(watchAllFields)
   }, [watchAllFields])
 
   // const onSubmit = () => {

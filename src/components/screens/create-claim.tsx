@@ -295,7 +295,7 @@ const CreateClaim = () => {
                     <FormControl>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value ? field.value.toString() : ""}
+                        defaultValue={field.value ? field.value : ""}
                       >
                         <SelectTrigger className="">
                           <SelectValue placeholder="Выберите характер соревнования" />
