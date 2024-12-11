@@ -1,7 +1,6 @@
 import SportTypeFilter from "./sport-type"
 import DisciplineFilter from "./discipline"
 import ContestmentsFilter from "./contestments"
-import GenderGroupFilter from "./gender-group"
 import AgeGroupFilter from "./age-group"
 import DateRangeFilter from "./date-range"
 import ContestTypeFilter from "./contest-type"
@@ -22,7 +21,6 @@ const allFilters: IFilter[] = [
     isOpen: false,
     children: <ContestmentsFilter />,
   },
-  { id: 4, label: "Пол", isOpen: false, children: <GenderGroupFilter /> },
   {
     id: 5,
     label: "Возрастная группа",
@@ -58,16 +56,13 @@ const Filters = () => {
     activeDisciplines,
     activeContestTypes,
     handleFilterChange,
-    handleGenderClear,
     handleClearFilter,
     clearAllFilters,
     hasActiveFilters,
     dateend,
     datestart,
-    ageend,
-    agestart,
-    male,
-    female,
+    agegroups,
+    activeAgeGroups,
     mincontestant,
     maxcontestant,
   } = useContext(FiltersContext)
@@ -110,15 +105,6 @@ const Filters = () => {
             {"Дата конца: " + convertDate(dateend)}
           </Badge>
         )}
-        {(male || female) && (
-          <Badge
-            onClick={() => {
-              handleGenderClear()
-            }}
-          >
-            {"Пол: " + [male, female].join(" ")}
-          </Badge>
-        )}
         {activeContestTypes.length > 0 && (
           <Badge
             onClick={() => {
@@ -144,22 +130,18 @@ const Filters = () => {
             {"Минимальное количество участников: " + mincontestant}
           </Badge>
         )}
-        {agestart && (
+        {activeAgeGroups.length > 0 && (
           <Badge
             onClick={() => {
-              handleClearFilter("agestart")
+              handleClearFilter("agegroup")
             }}
           >
-            {"От: " + agestart + "лет"}
-          </Badge>
-        )}
-        {ageend && (
-          <Badge
-            onClick={() => {
-              handleClearFilter("ageend")
-            }}
-          >
-            {"До: " + ageend + "лет"}
+            {agegroups.map((agegroup) => {
+              if (activeAgeGroups.includes(agegroup.id.toString()))
+                return `${agegroup.gender === 1 ? "Мужчины" : "Женщины"} от ${
+                  agegroup.start
+                } лет ${agegroup.end ? `до ${agegroup.end} лет ` : ""}`
+            })}
           </Badge>
         )}
         {maxcontestant && (

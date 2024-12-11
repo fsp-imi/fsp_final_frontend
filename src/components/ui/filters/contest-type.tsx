@@ -16,6 +16,9 @@ const ContestTypeFilter = () => {
         contesttypes.map((contesttype) => (
           <div key={contesttype.id} className="flex items-center space-x-2">
             <Checkbox
+              onClick={() =>
+                toggleFilter("contesttype", contesttype.id.toString())
+              }
               checked={isActive("contesttype", contesttype.id.toString())}
               id={`contesttype-${contesttype.id}`}
             />

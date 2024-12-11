@@ -19,10 +19,13 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import { formatDate } from "@/utils/format-date"
 import { IGetAllContests } from "@/interfaces/contest"
 import { ContestService } from "@/services/contest/contest.service"
+import { IAgeGroup } from "@/interfaces/age-group"
+import { AgeGroupService } from "@/services/contest/age-group.service"
 
 interface IFiltersContext {
   contests: IGetAllContests | undefined
   sporttypes: ISportType[]
+  agegroups: IAgeGroup[]
   disciplines: IDiscipline[]
   contesttypes: IContestType[]
   regions: IRegion[]
@@ -31,22 +34,17 @@ interface IFiltersContext {
   toggleFilter: (filterName: string, value: string) => void
   handleFilterChange: (name: string, value: string) => void
   handleDateRangeFilters: (date: IDatePicker) => void
-  handleGenderClear: () => void
   handleClearFilter: (name: string) => void
   isActive: (filterName: string, value: string) => boolean
   setCurPage: (value: string) => void
   clearAllFilters: () => void
   hasActiveFilters: () => boolean
-  handleAgeGroups: (sex: boolean, agestart: number, ageend?: number) => void
   activeSportTypes: string[]
   activeDisciplines: string[]
   activeContestTypes: string[]
+  activeAgeGroups: string[]
   dateend: string
   datestart: string
-  agestart: string
-  ageend: string
-  male: string
-  female: string
   mincontestant: string
   maxcontestant: string
   isSportTypesLoading: boolean
@@ -55,7 +53,8 @@ interface IFiltersContext {
   isRegionsLoading: boolean
   isCitiesLoading: boolean
   isDistrictsLoading: boolean
-  isContestsLoading: Boolean
+  isContestsLoading: boolean
+  isAgeGroupsLoading: boolean
   cur_page: string
 }
 
@@ -64,6 +63,7 @@ export const FiltersContext = createContext<IFiltersContext>({
   sporttypes: [],
   disciplines: [],
   contesttypes: [],
+  agegroups: [],
   regions: [],
   districts: [],
   cities: [],
@@ -74,8 +74,8 @@ export const FiltersContext = createContext<IFiltersContext>({
   isDistrictsLoading: true,
   isRegionsLoading: true,
   isContestsLoading: true,
+  isAgeGroupsLoading: true,
   toggleFilter: () => {},
-  handleGenderClear: () => {},
   handleFilterChange: () => {},
   handleDateRangeFilters: () => {},
   handleClearFilter: () => {},
@@ -83,16 +83,12 @@ export const FiltersContext = createContext<IFiltersContext>({
   isActive: () => false,
   clearAllFilters: () => {},
   hasActiveFilters: () => false,
-  handleAgeGroups: () => {},
   activeSportTypes: [],
   activeDisciplines: [],
   activeContestTypes: [],
+  activeAgeGroups: [],
   dateend: "",
   datestart: "",
-  agestart: "",
-  ageend: "",
-  male: "",
-  female: "",
   mincontestant: "",
   maxcontestant: "",
   cur_page: "",
@@ -107,10 +103,7 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
   const activeSportTypes = searchParams.getAll("sporttype")
   const activeDisciplines = searchParams.getAll("discipline")
   const activeContestTypes = searchParams.getAll("contesttype")
-  const agestart = searchParams.get("agestart") || ""
-  const ageend = searchParams.get("ageend") || ""
-  const male = searchParams.get("male") || ""
-  const female = searchParams.get("female") || ""
+  const activeAgeGroups = searchParams.getAll("agegroup")
   const mincontestant = searchParams.get("mincontestant") || ""
   const maxcontestant = searchParams.get("maxcontestant") || ""
   const datestart = searchParams.get("datestart") || ""
@@ -130,6 +123,11 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
   const { data: sporttypes, isLoading: isSportTypesLoading } = useQuery({
     queryKey: ["sporttypes"],
     queryFn: SportTypeService.getAll,
+  })
+
+  const { data: agegroups, isLoading: isAgeGroupsLoading } = useQuery({
+    queryKey: ["age groups"],
+    queryFn: AgeGroupService.getAll,
   })
 
   const { data: disciplines, isLoading: isDisciplinesLoading } = useQuery({
@@ -219,39 +217,12 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
     const params = new URLSearchParams(searchParams.toString())
 
     if (date.from && date.to) {
-      params.set("datestart", formatDate(date.from))
-      params.set("dateend", formatDate(date.to))
+      params.set("datestart", formatDate(date.from, true))
+      params.set("dateend", formatDate(date.to, true))
     } else {
       params.delete("datestart")
       params.delete("dateend")
     }
-
-    setSearchParams(params)
-  }
-
-  const handleAgeGroups = (sex: boolean, start: number, end?: number) => {
-    const params = new URLSearchParams(searchParams.toString())
-
-    if (sex) params.set("male", "Мужской")
-    if (!sex) params.set("female", "Женский")
-
-    if (male && sex) params.delete("male")
-    if (female && !sex) params.delete("female")
-
-    if (start) params.set("agestart", start.toString())
-    else params.delete("agestart")
-
-    if (end) params.set("ageend", end.toString())
-    else params.delete("ageend")
-
-    setSearchParams(params)
-  }
-
-  const handleGenderClear = () => {
-    const params = new URLSearchParams(searchParams.toString())
-
-    params.delete("male")
-    params.delete("female")
 
     setSearchParams(params)
   }
@@ -288,6 +259,7 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
         sporttypes: sporttypes || [],
         disciplines: disciplines || [],
         contesttypes: contesttypes || [],
+        agegroups: agegroups || [],
         regions: regions || [],
         districts: districts || [],
         cities: cities || [],
@@ -298,24 +270,20 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
         isDistrictsLoading,
         isRegionsLoading,
         isContestsLoading,
+        isAgeGroupsLoading,
         toggleFilter,
         handleFilterChange,
         handleDateRangeFilters,
-        handleGenderClear,
         handleClearFilter,
         isActive,
         clearAllFilters,
         hasActiveFilters,
-        handleAgeGroups,
         activeSportTypes,
         activeDisciplines,
         activeContestTypes,
+        activeAgeGroups,
         dateend,
         datestart,
-        agestart,
-        ageend,
-        male,
-        female,
         mincontestant,
         maxcontestant,
         setCurPage,
