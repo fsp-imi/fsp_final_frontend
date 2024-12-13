@@ -103,11 +103,11 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
   const activeSportTypes = searchParams.getAll("sporttype")
   const activeDisciplines = searchParams.getAll("discipline")
   const activeContestTypes = searchParams.getAll("contesttype")
-  const activeAgeGroups = searchParams.getAll("agegroup")
+  const activeAgeGroups = searchParams.getAll("age_group")
   const mincontestant = searchParams.get("mincontestant") || ""
   const maxcontestant = searchParams.get("maxcontestant") || ""
-  const datestart = searchParams.get("datestart") || ""
-  const dateend = searchParams.get("dateend") || ""
+  const datestart = searchParams.get("starttime") || ""
+  const dateend = searchParams.get("endtime") || ""
   const cur_page = searchParams.get("cur_page") || ""
 
   const getAllContests = useCallback(() => {
@@ -217,11 +217,11 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
     const params = new URLSearchParams(searchParams.toString())
 
     if (date.from && date.to) {
-      params.set("datestart", formatDate(date.from, true))
-      params.set("dateend", formatDate(date.to, true))
+      params.set("starttime", formatDate(date.from, true))
+      params.set("endtime", formatDate(date.to, true))
     } else {
-      params.delete("datestart")
-      params.delete("dateend")
+      params.delete("starttime")
+      params.delete("endtime")
     }
 
     setSearchParams(params)

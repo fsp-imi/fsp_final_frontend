@@ -28,3 +28,11 @@ export interface IGetAllContests {
   }
   pages: IPagination
 }
+
+export interface IGetOneContest {
+  data: {
+    contest: IContest
+    disciplines: IDisciplines
+    age_group: IAges
+  }
+}

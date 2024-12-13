@@ -51,10 +51,11 @@ export default {
           5: "hsl(var(--chart-5))",
         },
         gray: "#D9D9D9",
+        gray100: "#F3F4F6",
         lightgray: "#F5F5F5",
         darkgray: "#2C2C2C",
         darktext: "#757575",
-        blacktext: "#1E1E1E"
+        blacktext: "#1E1E1E",
       },
     },
   },

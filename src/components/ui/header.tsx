@@ -30,7 +30,7 @@ const Header = () => {
 
       {/* Мобильное меню */}
       <Sheet>
-        <SheetTrigger className="sm:hidden">
+        <SheetTrigger asChild className="sm:hidden">
           <MenuIcon />
         </SheetTrigger>
         <SheetContent>
@@ -40,26 +40,39 @@ const Header = () => {
               <Link to="/">Главная</Link>
             </SheetClose>
             <SheetClose asChild>
-              <Link to="/lk" className="">
-                Личный кабинет
-              </Link>
+              <Link to="/analytics">Аналитика</Link>
             </SheetClose>
-            <SheetClose asChild>
-              <Link to="/profile" className="">
-                Профиль
-              </Link>
-            </SheetClose>
+            {isLoading ? (
+              <Loader />
+            ) : user ? (
+              <>
+                <SheetClose asChild>
+                  <Link to="/lk" className="">
+                    Личный кабинет
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link to="/profile" className="">
+                    Профиль
+                  </Link>
+                </SheetClose>
 
-            <SheetClose asChild>
-              <Link to="/profile/federation" className="">
-                Профиль федерации
+                <SheetClose asChild>
+                  <Link to="/profile/federation" className="">
+                    Профиль федерации
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <div onClick={() => logout()} className="cursor-pointer">
+                    Выйти
+                  </div>
+                </SheetClose>
+              </>
+            ) : (
+              <Link to="/login">
+                <Button>Войти</Button>
               </Link>
-            </SheetClose>
-            <SheetClose asChild>
-              <div onClick={() => logout()} className="cursor-pointer">
-                Выйти
-              </div>
-            </SheetClose>
+            )}
           </div>
         </SheetContent>
       </Sheet>
@@ -75,11 +88,8 @@ const Header = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link
-                to="/contest-search"
-                className={navigationMenuTriggerStyle()}
-              >
-                Мероприятия
+              <Link to="/analytics" className={navigationMenuTriggerStyle()}>
+                Аналитика
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>

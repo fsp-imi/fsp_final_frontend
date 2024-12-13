@@ -12,6 +12,8 @@ import FederationProfile from "@/components/screens/federation-profile"
 import FiltersProvider from "@/providers/filters"
 import ResultUploadScreen from "@/components/screens/result-upload"
 import ResultsScreen from "@/components/screens/results"
+import AnalyticsScreen from "@/components/screens/analytics"
+import ContestScreen from "@/components/screens/contest"
 import Lk from "@/components/screens/lk"
 import ClaimScreen from "@/components/screens/claim"
 import CreateClaim from "@/components/screens/create-claim"
@@ -36,6 +38,7 @@ const Router = () => {
           }
         />
         <Route path="/profile" element={<ProfileScreen />} />
+        <Route path="/analytics" element={<AnalyticsScreen />} />
         <Route path="/profile/federation" element={<FederationProfile />} />
         <Route path="/federations" element={<FederationsScreen />} />
         <Route path="/federations/:id" element={<FederationScreen />} />
@@ -44,6 +47,7 @@ const Router = () => {
         <Route path="/results" element={<ResultsScreen />} />
         <Route path="/create-claim" element={<CreateClaim />} />
         <Route path="/claim/:id" element={<ClaimScreen />} />
+        <Route path="/contest/:id" element={<ContestScreen />} />
         <Route
           path="/contest-search"
           element={

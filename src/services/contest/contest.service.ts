@@ -1,5 +1,5 @@
 import { instance } from "../../api/api.interceptor"
-import { IContest, IGetAllContests } from "../../interfaces/contest"
+import { IGetAllContests, IGetOneContest } from "../../interfaces/contest"
 
 export const ContestService = {
   async getAll(searchParams?: string): Promise<IGetAllContests> {
@@ -11,9 +11,9 @@ export const ContestService = {
     return response.data
   },
 
-  async getById(id: string | number): Promise<IContest> {
+  async getById(id: string | number): Promise<IGetOneContest> {
     const response = await instance({
-      url: `/contests/contests/${id}`,
+      url: `/contests/${id}`,
       method: "GET",
     })
 

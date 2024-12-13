@@ -1,6 +1,5 @@
 import SportTypeFilter from "./sport-type"
 import DisciplineFilter from "./discipline"
-import ContestmentsFilter from "./contestments"
 import AgeGroupFilter from "./age-group"
 import DateRangeFilter from "./date-range"
 import ContestTypeFilter from "./contest-type"
@@ -10,17 +9,16 @@ import { IFilter } from "@/interfaces/filter"
 import { useContext } from "react"
 import { FiltersContext } from "@/providers/filters"
 import { Badge } from "../badge"
-import { convertDate } from "@/utils/format-date"
 
 const allFilters: IFilter[] = [
   { id: 0, label: "Вид спорта", isOpen: false, children: <SportTypeFilter /> },
   { id: 1, label: "Дисциплина", isOpen: false, children: <DisciplineFilter /> },
-  {
-    id: 3,
-    label: "Количество участников",
-    isOpen: false,
-    children: <ContestmentsFilter />,
-  },
+  // {
+  //   id: 3,
+  //   label: "Количество участников",
+  //   isOpen: false,
+  //   children: <ContestmentsFilter />,
+  // },
   {
     id: 5,
     label: "Возрастная группа",
@@ -63,8 +61,6 @@ const Filters = () => {
     datestart,
     agegroups,
     activeAgeGroups,
-    mincontestant,
-    maxcontestant,
   } = useContext(FiltersContext)
 
   return (
@@ -96,13 +92,13 @@ const Filters = () => {
           </Badge>
         )}
         {datestart && (
-          <Badge onClick={() => handleFilterChange("datestart", "")}>
-            {"Дата начала: " + convertDate(datestart)}
+          <Badge onClick={() => handleFilterChange("starttime", "")}>
+            {"Дата начала: " + datestart}
           </Badge>
         )}
         {dateend && (
-          <Badge onClick={() => handleFilterChange("dateend", "")}>
-            {"Дата конца: " + convertDate(dateend)}
+          <Badge onClick={() => handleFilterChange("endtime", "")}>
+            {"Дата конца: " + dateend}
           </Badge>
         )}
         {activeContestTypes.length > 0 && (
@@ -121,7 +117,7 @@ const Filters = () => {
                 .join(" ")}
           </Badge>
         )}
-        {mincontestant && (
+        {/* {mincontestant && (
           <Badge
             onClick={() => {
               handleClearFilter("mincontestant")
@@ -129,11 +125,11 @@ const Filters = () => {
           >
             {"Минимальное количество участников: " + mincontestant}
           </Badge>
-        )}
+        )} */}
         {activeAgeGroups.length > 0 && (
           <Badge
             onClick={() => {
-              handleClearFilter("agegroup")
+              handleClearFilter("age_group")
             }}
           >
             {agegroups.map((agegroup) => {
@@ -144,7 +140,7 @@ const Filters = () => {
             })}
           </Badge>
         )}
-        {maxcontestant && (
+        {/* {maxcontestant && (
           <Badge
             onClick={() => {
               handleClearFilter("ageend")
@@ -152,7 +148,7 @@ const Filters = () => {
           >
             {"Максимальное количество участников: " + maxcontestant}
           </Badge>
-        )}
+        )} */}
         {hasActiveFilters() ? (
           <Badge
             onClick={() => {

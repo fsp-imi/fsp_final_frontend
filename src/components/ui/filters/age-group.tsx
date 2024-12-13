@@ -16,15 +16,15 @@ const AgeGroupFilter = () => {
         agegroups.map((agegroup) => (
           <div key={agegroup.id} className="flex items-center space-x-2">
             <Checkbox
-              checked={isActive("agegroup", agegroup.id.toString())}
+              checked={isActive("age_group", agegroup.id.toString())}
               onClick={() => {
-                toggleFilter("agegroup", agegroup.id.toString())
+                toggleFilter("age_group", agegroup.id.toString())
               }}
               id={`agegroup-${agegroup.id}`}
             />
             <label
               onClick={() => {
-                toggleFilter("agegroup", agegroup.id.toString())
+                toggleFilter("age_group", agegroup.id.toString())
               }}
               htmlFor={`agegroup-${agegroup.id}`}
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

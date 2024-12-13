@@ -8,6 +8,8 @@ export const instance = axios.create({
   headers: getContentType(),
 })
 
+// instance.defaults.headers.common["Api-Key"] = import.meta.env.VITE_API_KEY
+
 instance.interceptors.request.use((config) => {
   const token = getToken()
 

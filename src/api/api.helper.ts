@@ -1,5 +1,6 @@
 export const getContentType = () => ({
   "Content-Type": "application/json",
+  "Api-Key": import.meta.env.VITE_API_KEY
 })
 
 export const errorCatch = (error: any): string => {

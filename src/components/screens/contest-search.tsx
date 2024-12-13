@@ -1,5 +1,6 @@
 import Filters from "../ui/filters/filters"
 import Loader from "../ui/loader"
+import ContestCard from "../ui/contest-card"
 
 import {
   Table,
@@ -21,20 +22,52 @@ import {
 } from "../ui/pagination"
 import { useContext } from "react"
 import { FiltersContext } from "@/providers/filters"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const ContestSearch = () => {
   const {
     contests: data,
+    contesttypes,
     isContestsLoading,
     setCurPage,
   } = useContext(FiltersContext)
 
+  const navigate = useNavigate()
+
   return (
     <div className="w-full p-8 relative bg-white rounded-3xl flex flex-col gap-8">
+      <div className="text-3xl font-semibold">
+        Единый календарный план Федерации спортивного программирования
+      </div>
+
       <Filters />
 
-      <Table>
+      <div className="lg:hidden flex flex-col gap-2">
+        {isContestsLoading ? (
+          <Loader />
+        ) : data && data.data.contests && data.data.contests.length > 0 ? (
+          data.data.contests.map((contest) => (
+            <ContestCard
+              key={contest.id}
+              disciplines={data.data.disciplines[contest.id.toString()].map(
+                (discipline) => discipline
+              )}
+              agegroups={data.data.ages[contest.id.toString()].map(
+                (age) => age
+              )}
+              contest_type={
+                contesttypes.find((item) => item.id === contest.contest_type)
+                  ?.name
+              }
+              contest={contest}
+            />
+          ))
+        ) : (
+          <div>К сожалению подходящих мероприятий нет</div>
+        )}
+      </div>
+
+      <Table className="hidden lg:block">
         <TableHeader>
           <TableRow>
             <TableHead>
@@ -46,21 +79,29 @@ const ContestSearch = () => {
               Место проведения (страна (-ы), субъект РФ, город) (спортивная
               база, центр)
             </TableHead>
+            <TableHead>Уровень</TableHead>
             <TableHead>Формат</TableHead>
+            <TableHead>Статус</TableHead>
             <TableHead>Результаты</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {isContestsLoading ? (
             <TableRow>
-              <TableCell>
+              <TableCell className="w-full flex justify-center items-center">
                 <Loader />
               </TableCell>
             </TableRow>
           ) : data && data.data.contests && data.data.contests.length > 0 ? (
             data.data.contests.map((contest) => {
               return (
-                <TableRow key={contest.id}>
+                <TableRow
+                  className="cursor-pointer"
+                  onClick={() => {
+                    navigate(`/contest/${contest.id}`)
+                  }}
+                  key={contest.id}
+                >
                   <TableCell>
                     {contest.name}{" "}
                     {data.data.disciplines[contest.id.toString()].map(
@@ -80,10 +121,30 @@ const ContestSearch = () => {
                       "-" + format(contest.end_time, "dd.MM.yyyy")}
                   </TableCell>
                   <TableCell>{contest.place}</TableCell>
-                  <TableCell>{contest.format}</TableCell>
                   <TableCell>
-                    {contest.file ? (
-                      <Link to={contest.file}>Скачать</Link>
+                    {contesttypes.find(
+                      (item) => item.id === contest.contest_type
+                    )?.name || "-"}
+                  </TableCell>
+                  <TableCell>
+                    {contest.format === "ONLINE"
+                      ? "Онлайн"
+                      : contest.format === "OFFLINE"
+                      ? "Оффлайн"
+                      : "Смешанный"}
+                  </TableCell>
+                  <TableCell>
+                    {contest.status === "ACTIVE"
+                      ? "Активный"
+                      : contest.status === "CLOSED"
+                      ? "Закрыт"
+                      : "Отменен"}
+                  </TableCell>
+                  <TableCell>
+                    {contest.status === "CLOSED" ? (
+                      <Link to={`/contest/${contest.id}/#result`}>
+                        Посмотреть
+                      </Link>
                     ) : (
                       "-"
                     )}

@@ -35,7 +35,7 @@ const RegistrationScreen = () => {
   }
 
   return (
-    <div className="w-screen min-h-screen flex justify-center items-center bg-[url('/registration.jpg')] bg-cover px-4">
+    <div className="w-full min-h-screen flex justify-center items-center bg-[url('/registration.jpg')] bg-cover px-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
