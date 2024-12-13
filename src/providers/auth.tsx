@@ -11,6 +11,7 @@ const wihtoutAuthRoutes = [
   "/analytics",
   "/analytics/team",
   "/email-verification",
+  "/email-verification-need",
 ]
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { check, isAuth, isLoading, clearError } = useUserStore()

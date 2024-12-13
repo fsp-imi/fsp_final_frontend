@@ -25,6 +25,7 @@ import PasswordResetChangeScreen from "@/components/screens/password-reset-chang
 
 import { Route, Routes } from "react-router-dom"
 import PasswordResetWaitScreen from "@/components/screens/password-reset-wait"
+import EmailVerificationNeedScreen from "@/components/screens/email-verification-need"
 
 const Router = () => {
   return (
@@ -70,8 +71,18 @@ const Router = () => {
           element={<EmailVerificationScreen />}
         />
         <Route path="/password-reset" element={<PasswordResetScreen />} />
-        <Route path="/password-reset-change" element={<PasswordResetChangeScreen />} />
-        <Route path="/password-reset-wait" element={<PasswordResetWaitScreen />} />
+        <Route
+          path="/password-reset-change"
+          element={<PasswordResetChangeScreen />}
+        />
+        <Route
+          path="/password-reset-wait"
+          element={<PasswordResetWaitScreen />}
+        />
+        <Route
+          path="/email-verification-need"
+          element={<EmailVerificationNeedScreen />}
+        />
         <Route
           path="/password-reset-success"
           element={<PasswordResetSuccessScreen />}

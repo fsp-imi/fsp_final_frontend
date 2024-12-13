@@ -12,8 +12,9 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "../ui/button"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useUserStore } from "@/store/user"
+import { getToken } from "@/services/auth/auth.helper"
 
 const RegistrationScreen = () => {
   const { register, error, isError } = useUserStore()
@@ -30,8 +31,12 @@ const RegistrationScreen = () => {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof registrationSchema>) => {
-    register(values)
+  const navigate = useNavigate()
+
+  const onSubmit = async (values: z.infer<typeof registrationSchema>) => {
+    await register(values)
+
+    if (getToken()) navigate("/email-verification-need")
   }
 
   return (
