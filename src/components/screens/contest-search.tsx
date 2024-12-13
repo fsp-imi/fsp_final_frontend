@@ -104,6 +104,7 @@ const ContestSearch = () => {
                 >
                   <TableCell>
                     {contest.name}{" "}
+                    {data.data.sport_types[contest.id.toString()]}{" "}
                     {data.data.disciplines[contest.id.toString()].map(
                       (discipline, index) => (
                         <span key={index} className="">

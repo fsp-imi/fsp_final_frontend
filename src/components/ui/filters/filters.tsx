@@ -9,16 +9,17 @@ import { IFilter } from "@/interfaces/filter"
 import { useContext } from "react"
 import { FiltersContext } from "@/providers/filters"
 import { Badge } from "../badge"
+import RegionFilter from "./region"
 
 const allFilters: IFilter[] = [
   { id: 0, label: "Вид спорта", isOpen: false, children: <SportTypeFilter /> },
   { id: 1, label: "Дисциплина", isOpen: false, children: <DisciplineFilter /> },
-  // {
-  //   id: 3,
-  //   label: "Количество участников",
-  //   isOpen: false,
-  //   children: <ContestmentsFilter />,
-  // },
+  {
+    id: 3,
+    label: "Регион",
+    isOpen: false,
+    children: <RegionFilter />,
+  },
   {
     id: 5,
     label: "Возрастная группа",
@@ -48,11 +49,13 @@ const allFilters: IFilter[] = [
 const Filters = () => {
   const {
     sporttypes,
+    regions,
     disciplines,
     contesttypes,
     activeSportTypes,
     activeDisciplines,
     activeContestTypes,
+    activeRegions,
     handleFilterChange,
     handleClearFilter,
     clearAllFilters,
@@ -117,15 +120,21 @@ const Filters = () => {
                 .join(" ")}
           </Badge>
         )}
-        {/* {mincontestant && (
+        {activeRegions.length > 0 && (
           <Badge
             onClick={() => {
-              handleClearFilter("mincontestant")
+              handleClearFilter("region")
             }}
           >
-            {"Минимальное количество участников: " + mincontestant}
+            {"Регион: " +
+              activeRegions
+                .map(
+                  (region) =>
+                    regions.find((item) => item.id.toString() === region)?.name
+                )
+                .join(", ")}
           </Badge>
-        )} */}
+        )}
         {activeAgeGroups.length > 0 && (
           <Badge
             onClick={() => {

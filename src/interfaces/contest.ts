@@ -20,11 +20,16 @@ interface IAges {
   [key: string]: string[]
 }
 
+interface ISportType {
+  [key: string]: string[]
+}
+
 export interface IGetAllContests {
   data: {
     contests: IContest[]
     disciplines: IDisciplines
     ages: IAges
+    sport_types: ISportType
   }
   pages: IPagination
 }
@@ -34,5 +39,6 @@ export interface IGetOneContest {
     contest: IContest
     disciplines: IDisciplines
     age_group: IAges
+    sport_types: ISportType
   }
 }

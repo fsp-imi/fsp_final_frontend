@@ -40,7 +40,7 @@ const Header = () => {
               <Link to="/">Главная</Link>
             </SheetClose>
             <SheetClose asChild>
-              <Link to="/analytics">Аналитика</Link>
+              <Link to="/analytics">Аналитика по среднему баллу</Link>
             </SheetClose>
             <SheetClose asChild>
               <Link to="/analytics/team">Аналитика по командам</Link>
@@ -92,7 +92,7 @@ const Header = () => {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link to="/analytics" className={navigationMenuTriggerStyle()}>
-                Аналитика
+                Аналитика по среднему баллу
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>

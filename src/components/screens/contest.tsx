@@ -68,7 +68,9 @@ const ContestScreen = () => {
 
         <div className="flex flex-col gap-1">
           <div className="text-2xl">Вид спорта</div>
-          <div className="text-xl">{data.data.contest.place}</div>
+          <div className="text-xl">
+            {data.data.sport_types[data.data.contest.id.toString()]}
+          </div>
         </div>
 
         <div className="flex flex-col gap-1">

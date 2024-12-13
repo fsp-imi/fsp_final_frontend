@@ -42,6 +42,7 @@ interface IFiltersContext {
   activeSportTypes: string[]
   activeDisciplines: string[]
   activeContestTypes: string[]
+  activeRegions: string[]
   activeAgeGroups: string[]
   dateend: string
   datestart: string
@@ -86,6 +87,7 @@ export const FiltersContext = createContext<IFiltersContext>({
   activeSportTypes: [],
   activeDisciplines: [],
   activeContestTypes: [],
+  activeRegions: [],
   activeAgeGroups: [],
   dateend: "",
   datestart: "",
@@ -103,6 +105,7 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
   const activeSportTypes = searchParams.getAll("sporttype")
   const activeDisciplines = searchParams.getAll("discipline")
   const activeContestTypes = searchParams.getAll("contesttype")
+  const activeRegions = searchParams.getAll("region")
   const activeAgeGroups = searchParams.getAll("age_group")
   const mincontestant = searchParams.get("mincontestant") || ""
   const maxcontestant = searchParams.get("maxcontestant") || ""
@@ -282,6 +285,7 @@ const FiltersProvider = ({ children }: { children: ReactNode }) => {
         activeDisciplines,
         activeContestTypes,
         activeAgeGroups,
+        activeRegions,
         dateend,
         datestart,
         mincontestant,
