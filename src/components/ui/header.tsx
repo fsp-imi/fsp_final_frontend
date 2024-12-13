@@ -49,9 +49,15 @@ const Header = () => {
               <Loader />
             ) : user ? (
               <>
+                {user.is_staff ? (
+                  <SheetClose asChild>
+                    <Link to="/federations">Федерации</Link>
+                  </SheetClose>
+                ) : null}
                 <SheetClose asChild>
                   <Link to="/lk" className="">
                     Личный кабинет
+                    {user.is_staff}
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>
@@ -59,12 +65,13 @@ const Header = () => {
                     Профиль
                   </Link>
                 </SheetClose>
-
-                <SheetClose asChild>
-                  <Link to="/profile/federation" className="">
-                    Профиль федерации
-                  </Link>
-                </SheetClose>
+                {!user.is_staff ? (
+                  <SheetClose asChild>
+                    <Link to="/profile/federation" className="">
+                      Профиль федерации
+                    </Link>
+                  </SheetClose>
+                ) : null}
                 <SheetClose asChild>
                   <div onClick={() => logout()} className="cursor-pointer">
                     Выйти
