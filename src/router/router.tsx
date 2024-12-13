@@ -21,8 +21,10 @@ import CreateClaim from "@/components/screens/create-claim"
 import EmailVerificationScreen from "@/components/screens/email-verification"
 import PasswordResetScreen from "@/components/screens/password-reset"
 import PasswordResetSuccessScreen from "@/components/screens/password-reset-success"
+import PasswordResetChangeScreen from "@/components/screens/password-reset-change"
 
 import { Route, Routes } from "react-router-dom"
+import PasswordResetWaitScreen from "@/components/screens/password-reset-wait"
 
 const Router = () => {
   return (
@@ -68,6 +70,8 @@ const Router = () => {
           element={<EmailVerificationScreen />}
         />
         <Route path="/password-reset" element={<PasswordResetScreen />} />
+        <Route path="/password-reset-change" element={<PasswordResetChangeScreen />} />
+        <Route path="/password-reset-wait" element={<PasswordResetWaitScreen />} />
         <Route
           path="/password-reset-success"
           element={<PasswordResetSuccessScreen />}

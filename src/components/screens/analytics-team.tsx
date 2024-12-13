@@ -101,7 +101,7 @@ const AnalyticsTeamScreen = () => {
                 <Loader />
               </TableCell>
             </TableRow>
-          ) : data && data.data ? (
+          ) : data && data.data.length > 0 ? (
             data.data.map((item, index) => (
               <TableRow key={index}>
                 <TableCell>{Object.entries(item)[0][0]}</TableCell>

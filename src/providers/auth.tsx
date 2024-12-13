@@ -11,10 +11,7 @@ const wihtoutAuthRoutes = [
   "/analytics",
   "/analytics/team",
   "/email-verification",
-  "/password-reset",
-  "/password-reset-success",
 ]
-
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { check, isAuth, isLoading, clearError } = useUserStore()
 
@@ -52,8 +49,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       } else {
         if (
-          !pathname.startsWith("/results/") &&
-          !pathname.startsWith("/contest/")
+          !pathname.startsWith(
+            "/contest/") &&
+          !pathname.startsWith("/password-reset")
         )
           if (
             !wihtoutAuthRoutes.includes(pathname) &&
