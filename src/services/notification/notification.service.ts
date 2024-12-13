@@ -4,7 +4,7 @@ import { INotification } from "../../interfaces/notification"
 export const NotificationService = {
   async getAll(): Promise<INotification[]> {
     const response = await instance({
-      url: "notificationapi/notifications/",
+      url: "/notifications/",
       method: "GET",
     })
 
@@ -13,7 +13,7 @@ export const NotificationService = {
 
   async delete(id: string | number) {
     const response = await instance({
-      url: `notificationapi/notifications/delete/${id}/`,
+      url: `/notifications/${id}/`,
       method: "DELETE",
     })
 

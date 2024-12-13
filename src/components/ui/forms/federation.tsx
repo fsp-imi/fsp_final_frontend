@@ -161,7 +161,12 @@ const FederationForm: FC<IFederationFormProps> = ({ federation }) => {
           <FormItem>
             <FormLabel>Уровень</FormLabel>
             <FormControl>
-              <Input disabled placeholder="ivan1" />
+              <Input
+                value={
+                  federation.level === "REG" ? "Региональный" : "Федеральный"
+                }
+                disabled
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
