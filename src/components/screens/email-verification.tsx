@@ -10,7 +10,7 @@ const EmailVerificationScreen = () => {
 
   const [searchParams] = useSearchParams()
 
-  const {mutate, isPending} =useMutation({
+  const {mutate, isPending} = useMutation({
     mutationKey: ['verify email'],
     mutationFn: async () => await AuthService.verifyEmail(searchParams.get("uuid") || "", searchParams.get("token") || ""),
     onSuccess: () => {
