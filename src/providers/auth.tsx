@@ -6,7 +6,14 @@ import { useLocation, useNavigate, useSearchParams } from "react-router"
 import { getToken } from "../services/auth/auth.helper"
 
 const authRoutes = ["/login", "/registration"]
-const wihtoutAuthRoutes = ["/", "/analytics", "/analytics/team"]
+const wihtoutAuthRoutes = [
+  "/",
+  "/analytics",
+  "/analytics/team",
+  "/email-verification",
+  "/password-reset",
+  "/password-reset-success",
+]
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { check, isAuth, isLoading, clearError } = useUserStore()

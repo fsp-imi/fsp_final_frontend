@@ -18,6 +18,9 @@ import Lk from "@/components/screens/lk"
 import ClaimScreen from "@/components/screens/claim"
 import AnalyticsTeamScreen from "@/components/screens/analytics-team"
 import CreateClaim from "@/components/screens/create-claim"
+import EmailVerificationScreen from "@/components/screens/email-verification"
+import PasswordResetScreen from "@/components/screens/password-reset"
+import PasswordResetSuccessScreen from "@/components/screens/password-reset-success"
 
 import { Route, Routes } from "react-router-dom"
 
@@ -60,6 +63,15 @@ const Router = () => {
         <Route path="/federations/:id" element={<FederationScreen />} />
         <Route path="/result-upload/:id" element={<ResultUploadScreen />} />
         <Route path="/lk" element={<Lk />} />
+        <Route
+          path="/email-verification"
+          element={<EmailVerificationScreen />}
+        />
+        <Route path="/password-reset" element={<PasswordResetScreen />} />
+        <Route
+          path="/password-reset-success"
+          element={<PasswordResetSuccessScreen />}
+        />
         <Route path="/results" element={<ResultsScreen />} />
         <Route path="/create-claim" element={<CreateClaim />} />
         <Route path="/claim/:id" element={<ClaimScreen />} />
