@@ -16,6 +16,7 @@ import AnalyticsScreen from "@/components/screens/analytics"
 import ContestScreen from "@/components/screens/contest"
 import Lk from "@/components/screens/lk"
 import ClaimScreen from "@/components/screens/claim"
+import AnalyticsTeamScreen from "@/components/screens/analytics-team"
 import CreateClaim from "@/components/screens/create-claim"
 
 import { Route, Routes } from "react-router-dom"
@@ -38,7 +39,22 @@ const Router = () => {
           }
         />
         <Route path="/profile" element={<ProfileScreen />} />
-        <Route path="/analytics" element={<AnalyticsScreen />} />
+        <Route
+          path="/analytics"
+          element={
+            <FiltersProvider>
+              <AnalyticsScreen />
+            </FiltersProvider>
+          }
+        />
+        <Route
+          path="/analytics/team"
+          element={
+            <FiltersProvider>
+              <AnalyticsTeamScreen />
+            </FiltersProvider>
+          }
+        />
         <Route path="/profile/federation" element={<FederationProfile />} />
         <Route path="/federations" element={<FederationsScreen />} />
         <Route path="/federations/:id" element={<FederationScreen />} />

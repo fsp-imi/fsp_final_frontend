@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./dropdown-menu"
-import { LogOut, MenuIcon, User, UserRoundPen } from "lucide-react"
+import { FlagIcon, LogOut, MenuIcon, User, UserRoundPen } from "lucide-react"
 import { useUserStore } from "@/store/user"
 import {
   NavigationMenu,
@@ -41,6 +41,9 @@ const Header = () => {
             </SheetClose>
             <SheetClose asChild>
               <Link to="/analytics">Аналитика</Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link to="/analytics/team">Аналитика по командам</Link>
             </SheetClose>
             {isLoading ? (
               <Loader />
@@ -92,6 +95,14 @@ const Header = () => {
                 Аналитика
               </Link>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link
+                to="/analytics/team"
+                className={navigationMenuTriggerStyle()}
+              >
+                Аналитика по командам
+              </Link>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -102,9 +113,12 @@ const Header = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="flex justify-center items-center bg-gray">
-                {user &&
-                  user?.first_name[0]?.toUpperCase() +
-                    user?.last_name[0]?.toUpperCase()}
+                {user
+                  ? (user.first_name
+                      ? user.first_name[0]?.toUpperCase()
+                      : "A") +
+                    (user.last_name ? user?.last_name[0]?.toUpperCase() : "V")
+                  : "AV"}
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="mr-8">
@@ -114,6 +128,14 @@ const Header = () => {
                   Личный кабинет
                 </DropdownMenuItem>
               </Link>
+              {user.is_staff ? (
+                <Link to="/federations">
+                  <DropdownMenuItem>
+                    <FlagIcon />
+                    Федерации
+                  </DropdownMenuItem>
+                </Link>
+              ) : null}
               <Link to="/profile">
                 <DropdownMenuItem>
                   <UserRoundPen />

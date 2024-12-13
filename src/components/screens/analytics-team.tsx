@@ -11,7 +11,6 @@ import {
 } from "../ui/table"
 import { AnalyticService } from "@/services/analytic/analytic"
 import { useContext } from "react"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import {
   Pagination,
   PaginationContent,
@@ -21,27 +20,31 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../ui/pagination"
-import { FiltersContext } from "@/providers/filters"
-import { ScrollArea } from "../ui/scroll-area"
-import { Checkbox } from "../ui/checkbox"
-import { useSearchParams } from "react-router-dom"
-import { Button } from "../ui/button"
-import { ChevronsUpDown } from "lucide-react"
 
-const AnalyticsScreen = () => {
+import { FiltersContext } from "@/providers/filters"
+import { Checkbox } from "../ui/checkbox"
+import { ChevronsUpDown } from "lucide-react"
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+import { Button } from "../ui/button"
+import { useSearchParams } from "react-router-dom"
+import { ScrollArea } from "../ui/scroll-area"
+
+const AnalyticsTeamScreen = () => {
   const [searchParams] = useSearchParams()
 
   const { data, isLoading } = useQuery({
     queryKey: ["analytics", searchParams.toString()],
-    queryFn: async () => await AnalyticService.getAll(searchParams.toString()),
+    queryFn: async () =>
+      await AnalyticService.getAllForTeams(searchParams.toString()),
     placeholderData: keepPreviousData,
   })
 
   const { setCurPage, regions, isRegionsLoading, toggleFilter, isActive } =
     useContext(FiltersContext)
+
   return (
     <div className="w-full p-8 relative bg-white rounded-3xl flex flex-col gap-8">
-      <div className="text-3xl font-medium">Аналитика</div>
+      <div className="text-3xl font-medium">Аналитика по командам</div>
 
       <Popover>
         <PopoverTrigger asChild>
@@ -87,7 +90,7 @@ const AnalyticsScreen = () => {
         <TableHeader>
           <TableRow>
             <TableHead>Район</TableHead>
-            <TableHead>Среднее количество очков</TableHead>
+            <TableHead>Количество команд</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -185,4 +188,4 @@ const AnalyticsScreen = () => {
   )
 }
 
-export default AnalyticsScreen
+export default AnalyticsTeamScreen

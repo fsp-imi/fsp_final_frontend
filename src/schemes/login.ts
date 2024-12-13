@@ -7,6 +7,6 @@ export const loginSchema = z.object({
     .max(100, { message: "Слишком длинный логин" }),
   password: z
     .string()
-    .min(8, { message: "Минимальная длина пароля 8 символов" })
+    .min(3, { message: "Минимальная длина пароля 3 символа" })
     .max(40, { message: "Пароль слишком длинный" }),
 })

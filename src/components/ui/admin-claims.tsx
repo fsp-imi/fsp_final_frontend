@@ -101,7 +101,11 @@ const AdminClaims = () => {
             </TableRow>
           ))
         ) : (
-          <div className="">Заявок нет</div>
+          <TableRow>
+            <TableCell>
+              <div className="">Заявок нет</div>
+            </TableCell>
+          </TableRow>
         )}
       </TableBody>
     </Table>
